@@ -3,7 +3,8 @@ using System.Collections;
 
 public class LookAtCamera : MonoBehaviour
 {
-    public GameObject target;
+    public GameObject boss;
+    public GameObject player;
     public float moveSpeed;
 
     private float playerTransformX;
@@ -24,15 +25,15 @@ public class LookAtCamera : MonoBehaviour
 
     void Update ()
     {
-        Vector3 newPosition = new Vector3(positionToBeAt.x + target.transform.position.x - playerTransformX, positionToBeAt.y - (target.transform.position.z - playerTransformZ), positionToBeAt.z + target.transform.position.z - playerTransformZ);
+        Vector3 newPosition = new Vector3(positionToBeAt.x + (player.transform.position.x - playerTransformX), positionToBeAt.y - (player.transform.position.z - playerTransformZ), positionToBeAt.z + (player.transform.position.z - playerTransformZ)*2);
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * moveSpeed);
         positionToBeAt = newPosition;
 
-        Vector3 relativePos = target.transform.position - transform.position;
+        Vector3 relativePos = boss.transform.position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(relativePos);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * moveSpeed);
         //transform.LookAt(target.transform);
-        playerTransformX = target.transform.position.x;
-        playerTransformZ = target.transform.position.z;
+        playerTransformX = player.transform.position.x;
+        playerTransformZ = player.transform.position.z;
     }
 }

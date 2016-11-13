@@ -69,8 +69,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\FireGun.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
+    <Compile Include="Assets\Scripts\FireGun.cs" />
     <Compile Include="Assets\Scripts\LookAtCamera.cs" />
     <Compile Include="Assets\Scripts\LookAtOrigin.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
