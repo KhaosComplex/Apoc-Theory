@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
 {
     public float movementSpeed;
     public float JumpSpeed;
-    public float dashSpeed;
+    public float dashDistance;
 
     private bool onGround;
 
@@ -26,9 +26,15 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
         {
-            transform.position = new Vector3(transform.position.x + (horizontal * dashSpeed), transform.position.y, transform.position.z + (vertical * dashSpeed));
+            float deltaX = Input.GetAxis("Horizontal");
+            float deltaZ = Input.GetAxis("Vertical");
+            if (!(deltaX == 0 && deltaZ == 0)) {
+                float hyp = Mathf.Pow(Mathf.Pow(deltaX, 2f) + Mathf.Pow(deltaZ, 2f), .5f);
+                float mod = dashDistance / hyp;
+                transform.position = new Vector3(transform.position.x + (deltaX * mod), transform.position.y, transform.position.z + (deltaZ * mod));
+            }
         }
 
     }
