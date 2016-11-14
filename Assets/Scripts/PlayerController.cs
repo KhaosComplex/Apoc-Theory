@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
         float vertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
         Vector3 movement = new Vector3(horizontal, 0, vertical);
-        movement = Camera.main.transform.TransformDirection(movement);
+        //movement = Camera.main.transform.TransformDirection(movement);
         transform.Translate(movement.x, 0, movement.z);
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
@@ -30,15 +30,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-    }
-
-    void FixedUpdate()
-    {
         if (onGround && Input.GetKeyDown(KeyCode.Space))
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
             onGround = false;
         }
+
     }
 
     void OnCollisionEnter(Collision other)

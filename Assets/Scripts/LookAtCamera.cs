@@ -6,33 +6,34 @@ public class LookAtCamera : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private float moveSpeed;
 
-    private float playerTransformX;
-    private float playerTransformZ;
-    private Vector3 positionToBeAt;
+    private float originalPlayerPositionX;
+    private float originalPlayerPositonZ;
+    private Vector3 originalCameraPosition;
 
-    void Start ()
+    void Start()
     {
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
         {
-            playerTransformX = playerObject.GetComponent<PlayerController>().transform.position.x;
-            playerTransformZ = playerObject.GetComponent<PlayerController>().transform.position.z;
+            originalPlayerPositionX = playerObject.GetComponent<PlayerController>().transform.position.x;
+            originalPlayerPositonZ = playerObject.GetComponent<PlayerController>().transform.position.z;
         }
-        positionToBeAt = transform.position;
+
+        originalCameraPosition = transform.position;
 
     }
 
-    void Update ()
+    void Update()
     {
-        Vector3 newPosition = new Vector3(positionToBeAt.x + (player.transform.position.x - playerTransformX), positionToBeAt.y - (player.transform.position.z - playerTransformZ), positionToBeAt.z + (player.transform.position.z - playerTransformZ)*2);
+        Vector3 newPosition = new Vector3(
+            originalCameraPosition.x + (player.transform.position.x - originalPlayerPositionX),
+            Mathf.Clamp(originalCameraPosition.y - (player.transform.position.z - originalPlayerPositonZ), 6, 26),
+            Mathf.Clamp(originalCameraPosition.z + (player.transform.position.z - originalPlayerPositonZ) * 2, -40, 3));
+
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * moveSpeed);
-        positionToBeAt = newPosition;
 
         Vector3 relativePos = player.transform.position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(relativePos);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * moveSpeed);
-        //transform.LookAt(target.transform);
-        playerTransformX = player.transform.position.x;
-        playerTransformZ = player.transform.position.z;
     }
 }
