@@ -4,7 +4,7 @@ using System.Collections;
 public class Mover : MonoBehaviour
 {
 
-    public float speed;
+    [SerializeField] private float speed;
     Rigidbody rb;
 
     void Start()

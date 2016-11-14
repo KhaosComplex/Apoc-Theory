@@ -3,13 +3,13 @@ using System.Collections;
 
 public class BossShoot : MonoBehaviour
 {
-    public Transform controller, start, end;
-    public float speed;
-    public GameObject shot;
+    [SerializeField] private Transform controller, start, end;
+    [SerializeField] private float speed;
+    [SerializeField] private GameObject shot;
 
-    public float fireRate = 0.5f;
+    [SerializeField] private float fireRate = 0.5f;
     private float nextFire = 0.5f;
-    public bool movingRight;
+    [SerializeField] private bool movingRight;
 
     void Update()
     {

@@ -3,10 +3,10 @@ using System.Collections;
 
 public class FireGun : MonoBehaviour {
 
-    public GameObject shot;
-    public Transform shotSpawn;
+    [SerializeField] private GameObject shot;
+    [SerializeField] private Transform shotSpawn;
 
-    public float fireRate = 0.5f;
+    [SerializeField] private float fireRate = 0.5f;
     private float nextFire = 0.5f;
 
     void Update()

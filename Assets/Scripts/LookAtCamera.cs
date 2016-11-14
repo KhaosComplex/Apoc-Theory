@@ -3,8 +3,8 @@ using System.Collections;
 
 public class LookAtCamera : MonoBehaviour
 {
-    public GameObject player;
-    public float moveSpeed;
+    [SerializeField] private GameObject player;
+    [SerializeField] private float moveSpeed;
 
     private float playerTransformX;
     private float playerTransformZ;
