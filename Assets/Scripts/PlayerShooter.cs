@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireGun : MonoBehaviour {
+public class PlayerShooter : MonoBehaviour
+{
 
-    [SerializeField] private GameObject shot;
-    [SerializeField] private Transform shotSpawn;
+    [SerializeField]
+    private GameObject shot;
+    [SerializeField]
+    private Transform shotSpawn;
 
-    [SerializeField] private float fireRate = 0.5f;
+    [SerializeField]
+    private float fireRate = 0.5f;
     private float nextFire = 0.5f;
 
     void Update()
@@ -16,7 +20,7 @@ public class FireGun : MonoBehaviour {
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-           // GetComponent<AudioSource>().Play();
+            // GetComponent<AudioSource>().Play();
         }
     }
 }

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float dashDistance;
+    [SerializeField] private float HP;
 
     private bool onGround;
 
@@ -31,6 +32,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        if (onGround && Input.GetKeyDown(KeyCode.Space))
+        {
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+            onGround = false;
+        }
+    }
+
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Ground")
@@ -39,12 +49,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    public float getHP()
     {
-        if (onGround && Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
-            onGround = false;
-        }
+        return HP;
+    }
+
+    public void setHP(float newHP)
+    {
+        HP = newHP;
     }
 }

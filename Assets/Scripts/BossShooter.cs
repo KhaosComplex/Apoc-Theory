@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossShoot : MonoBehaviour
+public class BossShooter : MonoBehaviour
 {
     [SerializeField] private Transform controller, start, end;
     [SerializeField] private float speed;
