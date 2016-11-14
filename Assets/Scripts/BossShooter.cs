@@ -3,7 +3,9 @@ using System.Collections;
 
 public class BossShooter : MonoBehaviour
 {
-    [SerializeField] private Transform controller, start, end;
+    [SerializeField] private Transform controller;
+    [SerializeField] private Transform start;
+    [SerializeField] private Transform end;
     [SerializeField] private float speed;
     [SerializeField] private GameObject shot;
 
