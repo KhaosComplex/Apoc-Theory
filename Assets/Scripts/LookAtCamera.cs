@@ -15,8 +15,8 @@ public class LookAtCamera : MonoBehaviour
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
         {
-            playerTransformX = playerObject.GetComponent<Player>().transform.position.x;
-            playerTransformZ = playerObject.GetComponent<Player>().transform.position.z;
+            playerTransformX = playerObject.GetComponent<PlayerController>().transform.position.x;
+            playerTransformZ = playerObject.GetComponent<PlayerController>().transform.position.z;
         }
         positionToBeAt = transform.position;
 

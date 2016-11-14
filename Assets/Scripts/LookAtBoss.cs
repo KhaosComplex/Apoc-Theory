@@ -3,9 +3,9 @@ using System.Collections;
 
 public class LookAtBoss : MonoBehaviour
 {
-    public GameObject boss;
-    public GameObject player;
-    public float moveSpeed;
+    [SerializeField] private GameObject boss;
+    [SerializeField] private GameObject player;
+    [SerializeField] private float moveSpeed;
 
     private float playerTransformX;
     private float playerTransformZ;
@@ -16,8 +16,8 @@ public class LookAtBoss : MonoBehaviour
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
         {
-            playerTransformX = playerObject.GetComponent<Player>().transform.position.x;
-            playerTransformZ = playerObject.GetComponent<Player>().transform.position.z;
+            playerTransformX = playerObject.GetComponent<PlayerController>().transform.position.x;
+            playerTransformZ = playerObject.GetComponent<PlayerController>().transform.position.z;
         }
         positionToBeAt = transform.position;
 

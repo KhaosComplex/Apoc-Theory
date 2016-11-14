@@ -13,10 +13,6 @@ public class BossShoot : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("C" + controller.eulerAngles.y);
-        Debug.Log("S" + start.eulerAngles.y);
-        Debug.Log("E" + end.eulerAngles.y);
-        Debug.Log(movingRight);
         if (movingRight == true)
             controller.rotation = Quaternion.RotateTowards(controller.rotation, end.rotation, Time.deltaTime * speed);
        else
