@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float JumpSpeed;
+    [SerializeField] private float jumpSpeed;
     [SerializeField] private float dashDistance;
 
     private bool onGround;
@@ -41,13 +41,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (onGround)
+        if (onGround && Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GetComponent<Rigidbody>().AddForce(Vector3.up * JumpSpeed);
-                onGround = false;
-            }
+            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+            onGround = false;
         }
     }
 }
