@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LookAtBoss : MonoBehaviour
+public class CameraLookAtBoss : MonoBehaviour
 {
     [SerializeField] private GameObject boss;
     [SerializeField] private GameObject player;

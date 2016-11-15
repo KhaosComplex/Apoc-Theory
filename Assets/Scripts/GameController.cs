@@ -37,7 +37,10 @@ public class GameController : MonoBehaviour {
         {
             bossHP = bossObject.GetComponent<BossController>().getHP();
             if (bossHP <= 0)
+            {
+                bossObject.GetComponent<Renderer>().material.color = Color.red;
                 bossHP = 0;
+            }
         }
         playerHPText.text = ("Player HP: " + playerHP);
         bossHPText.text = ("Boss HP: " + bossHP);

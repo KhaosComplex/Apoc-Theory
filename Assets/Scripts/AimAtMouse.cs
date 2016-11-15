@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MouseLook : MonoBehaviour
+public class AimAtMouse : MonoBehaviour
 {
     private GameObject playerObject;
     private Vector3 playerPosition;
