@@ -65,4 +65,9 @@ public class PlayerController : MonoBehaviour
     {
         HP = newHP;
     }
+
+    public void takeDamage(float damage)
+    {
+        HP = HP - damage;
+    }
 }

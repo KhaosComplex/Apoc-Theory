@@ -14,4 +14,9 @@ public class BossController : MonoBehaviour {
     {
         HP = newHP;
     }
+
+    public void takeDamage(float damage)
+    {
+        HP = HP - damage;
+    }
 }

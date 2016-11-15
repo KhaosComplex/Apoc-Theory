@@ -11,16 +11,20 @@ public class BossShotController : MonoBehaviour
 
     void Start()
     {
+        //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
+
+
         playerObject = GameObject.FindWithTag("Player");
     }
 
     void OnTriggerEnter(Collider other)
     {
+        //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
         if(other.gameObject.tag.Equals("Player"))
         {
-            playerObject.GetComponent<PlayerController>().setHP((playerObject.GetComponent<PlayerController>().getHP()) - damage);
+            playerObject.GetComponent<PlayerController>().takeDamage(damage);
             Destroy(this.gameObject);
         }
     }

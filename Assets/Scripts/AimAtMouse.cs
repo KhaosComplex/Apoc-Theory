@@ -4,33 +4,35 @@ using System.Collections;
 public class AimAtMouse : MonoBehaviour
 {
     private GameObject playerObject;
-    private Vector3 playerPosition;
+    private Transform playerTransform;
 
     void Start()
     {
-
+        //GET REFERENCE TO PLAYER OBJECT TRANSFORM
+        playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerTransform = playerObject.transform;
+        }
     }
 
     void Update()
     {
-        GameObject playerObject = GameObject.FindWithTag("Player");
-        if (playerObject != null)
-        {
-            playerPosition = playerObject.transform.position;
-        }
-
+        //GET MOUSE POSITION AND SET IT TO THE MIDDLE OF THE MOUSE CURSOR
         Vector3 mousePos = Input.mousePosition;
         mousePos.y = mousePos.y - 16;
-        Ray mouseRay = Camera.main.ScreenPointToRay(mousePos);
+
+        //CREATE A RAY FROM CAMERA TO MOUSE
+        Ray rayCameraToMouse = Camera.main.ScreenPointToRay(mousePos);
         RaycastHit hit = new RaycastHit();
 
-        //If Right mouse button is pressed.
-        if (Physics.Raycast(mouseRay, out hit, 100))
+        //CAST RAY FROM CAMERA TO MOUSE
+        if (Physics.Raycast(rayCameraToMouse, out hit, 100))
         {
-            //Get the angle between the points
-            float angle = AngleBetweenTwoPoints(new Vector2(playerPosition.x, playerPosition.z), new Vector2(hit.point.x, hit.point.z));
+            //GET THE ANGLE BETWEEN BOTH POINTS
+            float angle = AngleBetweenTwoPoints(new Vector2(playerTransform.position.x, playerTransform.position.z), new Vector2(hit.point.x, hit.point.z));
 
-            //Ta Daaa
+            //ROTATE IN THE DIRECTION OF THE MOUSE (OFFSET 90 FOR PROPER FORWARD AXIS)
             transform.rotation = Quaternion.Euler(new Vector3(0f, angle + 90, 0f));
         }
 
