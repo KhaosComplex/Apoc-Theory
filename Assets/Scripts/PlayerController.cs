@@ -12,11 +12,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //GET THE CHARACTER CONTROLLER AND DIRECTION OF MOVEMENT IN RELATION TO SPEED
+        CharacterController controller = GetComponent<CharacterController>();
         float horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
         float verticalMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
-        Vector3 movement = new Vector3(horizontalMovement, 0, verticalMovement);
-        //movement = Camera.main.transform.TransformDirection(movement);
-        transform.Translate(movement.x, 0, movement.z);
+
+        //CREATE THE MOVEMENT DIRECTION VECTOR
+        Vector3 moveDirection = new Vector3(horizontalMovement, 0, verticalMovement);
+        moveDirection = transform.TransformDirection(moveDirection);
+
+        //FINALLY HAVE THE PLAYER MOVE IN THAT DIRECTION
+        controller.Move(moveDirection);
 
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
