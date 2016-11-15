@@ -1,35 +1,44 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float jumpSpeed;
-    [SerializeField] private float dashDistance;
-    [SerializeField] private float HP;
+    [SerializeField]
+    private float movementSpeed;
+    [SerializeField]
+    private float jumpSpeed;
+    [SerializeField]
+    private float dashDistance;
+    [SerializeField]
+    private float HP;
 
     private bool isOnGround;
+    private CharacterController controller;
+
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+        controller.detectCollisions = false;
+    }
 
     void Update()
     {
         //GET THE CHARACTER CONTROLLER AND DIRECTION OF MOVEMENT IN RELATION TO SPEED
-        CharacterController controller = GetComponent<CharacterController>();
-        float horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-        float verticalMovement = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
+        float horizontalMovement = Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
 
         //CREATE THE MOVEMENT DIRECTION VECTOR
         Vector3 moveDirection = new Vector3(horizontalMovement, 0, verticalMovement);
-        moveDirection = transform.TransformDirection(moveDirection);
-
-        //FINALLY HAVE THE PLAYER MOVE IN THAT DIRECTION
-        controller.Move(moveDirection);
+        moveDirection *= movementSpeed;
+        //moveDirection = transform.TransformDirection(moveDirection);
 
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
         {
             // GET THE CHANGE IN DISTANCE REQUIRED TO DASH (AKA DIRECTION)
-            float deltaX = Input.GetAxis("Horizontal");
-            float deltaZ = Input.GetAxis("Vertical");
+            float deltaX = horizontalMovement;
+            float deltaZ = verticalMovement;
 
             // AS LONG AS BOTH DISTANCES AREN'T 0
             if (!(deltaX == 0 && deltaZ == 0))
@@ -45,11 +54,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
-        if (isOnGround && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.up * jumpSpeed);
+            moveDirection.y = jumpSpeed;
             isOnGround = false;
         }
+
+        transform.Translate(moveDirection * Time.deltaTime);
 
     }
 
