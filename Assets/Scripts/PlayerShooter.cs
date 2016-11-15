@@ -16,7 +16,8 @@ public class PlayerShooter : MonoBehaviour
         if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            GameObject shotHolder = (GameObject)Instantiate(shot, shotSpawn.position, shotSpawn.rotation); ;
+            shotHolder.transform.parent = GameObject.Find("Player Shots").transform;
             // GetComponent<AudioSource>().Play();
         }
     }

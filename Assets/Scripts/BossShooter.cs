@@ -32,7 +32,8 @@ public class BossShooter : MonoBehaviour
         if (Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(shot, controller.position, controller.rotation);
+            GameObject shotHolder = (GameObject)Instantiate(shot, controller.position, controller.rotation);
+            shotHolder.transform.parent = GameObject.Find("Boss Shots").transform;
         }
     }
 }
