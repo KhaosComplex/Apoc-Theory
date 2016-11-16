@@ -51,18 +51,24 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (controller.isGrounded) gravityRate = -1f;
-        else gravityRate += gravity;
         //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
         if (controller.isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             gravityRate = jumpSpeed;
         }
 
-        moveDirection.y = gravityRate;
-
         controller.Move(moveDirection * Time.deltaTime);
 
+    }
+
+    void FixedUpdate()
+    {
+        if (controller.isGrounded) gravityRate = -1f;
+        else gravityRate += gravity;
+
+        Vector3 gravityVector = new Vector3(0, gravityRate, 0);
+
+        controller.Move(gravityVector * Time.deltaTime);
     }
 
     void OnCollisionEnter(Collision other)
