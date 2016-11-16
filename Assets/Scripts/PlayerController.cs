@@ -51,8 +51,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.Log(controller.isGrounded);
-
         if (controller.isGrounded) gravityRate = -1f;
         else gravityRate += gravity;
         //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
