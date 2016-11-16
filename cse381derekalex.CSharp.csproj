@@ -69,9 +69,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ObeliskController.cs" />
     <Compile Include="Assets\Scripts\AimAtMouse.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
+    <Compile Include="Assets\Scripts\BossObeliskController.cs" />
     <Compile Include="Assets\Scripts\BossShooter.cs" />
     <Compile Include="Assets\Scripts\BossShotController.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtBoss.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\CameraLookAtPlayer.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\ObeliskController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerShooter.cs" />
     <Compile Include="Assets\Scripts\PlayerShotController.cs" />
