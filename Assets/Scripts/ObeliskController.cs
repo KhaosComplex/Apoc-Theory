@@ -63,6 +63,7 @@ public class ObeliskController : MonoBehaviour {
         if (other.gameObject.tag.Equals("Player"))
         {
             playerObject.GetComponent<PlayerController>().takeDamage(damage);
+            Destroy(this.gameObject);
         }
     }
 
