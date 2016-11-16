@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float dashDistance;
     [SerializeField]
     private float HP;
+    private float gravity;
 
     private bool isOnGround;
     private CharacterController controller;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
         //CREATE THE MOVEMENT DIRECTION VECTOR
         Vector3 moveDirection = new Vector3(horizontalMovement, 0, verticalMovement);
         moveDirection *= movementSpeed;
-        //moveDirection = transform.TransformDirection(moveDirection);
+        moveDirection = transform.TransformDirection(moveDirection);
 
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
@@ -56,11 +57,18 @@ public class PlayerController : MonoBehaviour
         //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            moveDirection.y = jumpSpeed;
+            //moveDirection.y = jumpSpeed;
             isOnGround = false;
         }
 
-        transform.Translate(moveDirection * Time.deltaTime);
+        if (isOnGround) gravity = 0;
+        else gravity += -9.81f;
+
+        //moveDirection.y = gravity;
+
+        //Debug.Log(moveDirection);
+
+        controller.Move(moveDirection * Time.deltaTime);
 
     }
 
