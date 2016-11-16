@@ -4,6 +4,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Transform childPlayerTransform;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float dashDistance;
@@ -43,6 +44,9 @@ public class PlayerController : MonoBehaviour
             Vector3 moveDirection = new Vector3(horizontalMovement, 0, verticalMovement);
             moveDirection *= movementSpeed;
             moveDirection = transform.TransformDirection(moveDirection);
+
+            //ROTATE THE PLAYER MODEL IN THE DIRECTION THE PLAYER IS MOVING
+            childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
 
             //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
             if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
