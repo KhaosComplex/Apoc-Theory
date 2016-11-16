@@ -4,15 +4,12 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float movementSpeed;
-    [SerializeField]
-    private float jumpSpeed;
-    [SerializeField]
-    private float dashDistance;
-    [SerializeField]
-    private float HP;
-    private float gravity;
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float jumpSpeed;
+    [SerializeField] private float dashDistance;
+    [SerializeField] private float HP;
+    [SerializeField] private float gravity;
+    private float gravityRate;
 
     private bool isOnGround;
     private CharacterController controller;
@@ -54,19 +51,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (isOnGround) gravityRate = 0;
+        else gravityRate += gravity;
         //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //moveDirection.y = jumpSpeed;
+            gravityRate = jumpSpeed;
             isOnGround = false;
         }
 
-        if (isOnGround) gravity = 0;
-        else gravity += -9.81f;
-
-        //moveDirection.y = gravity;
-
-        //Debug.Log(moveDirection);
+        moveDirection.y = gravityRate;
 
         controller.Move(moveDirection * Time.deltaTime);
 
