@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDistance;
     [SerializeField] private float HP;
     [SerializeField] private float gravity;
-    private float gravityRate;
+    private float gravityRate = 1f;
 
     private bool isOnGround;
     private CharacterController controller;
@@ -51,13 +51,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (isOnGround) gravityRate = 0;
+        Debug.Log(controller.isGrounded);
+
+        if (controller.isGrounded) gravityRate = -1f;
         else gravityRate += gravity;
         //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (controller.isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             gravityRate = jumpSpeed;
-            isOnGround = false;
         }
 
         moveDirection.y = gravityRate;
