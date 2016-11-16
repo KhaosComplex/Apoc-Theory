@@ -10,10 +10,15 @@ public class ObeliskController : MonoBehaviour {
     private int direction;
     private float currentTime;
     private Rigidbody rb;
+    private GameObject playerObject;
+
+    public enum Directions {forward, backward, right, left };
 
     void Start ()
     {
         currentTime = Time.time;
+
+        playerObject = GameObject.FindWithTag("Player");
     }
 	
 	// Update is called once per frame
@@ -22,19 +27,19 @@ public class ObeliskController : MonoBehaviour {
             switch(direction)
             {
                 //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD
-                case 1:
+                case (int)Directions.forward:
                     rb = GetComponent<Rigidbody>();
                     rb.velocity = transform.forward * speed;
                     break;
-                case 2:
+                case (int)Directions.backward:
                     rb = GetComponent<Rigidbody>();
                     rb.velocity = -transform.forward * speed;
                     break;
-                case 3:
+                case (int)Directions.right:
                     rb = GetComponent<Rigidbody>();
                     rb.velocity = transform.right * speed;
                     break;
-                case 4:
+                case (int)Directions.left:
                     rb = GetComponent<Rigidbody>();
                     rb.velocity = -transform.right * speed;
                     break;
@@ -47,9 +52,18 @@ public class ObeliskController : MonoBehaviour {
         return direction;
     }
 
-    public void setDirection(int directionToTravelIn)
+    public void setDirection(Directions directionToTravelIn)
     {
-        direction = directionToTravelIn;
+        direction = (int)directionToTravelIn;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            playerObject.GetComponent<PlayerController>().takeDamage(damage);
+        }
     }
 
 }
