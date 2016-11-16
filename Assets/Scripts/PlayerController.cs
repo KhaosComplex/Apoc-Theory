@@ -10,16 +10,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDistance;
     [SerializeField] private float HP;
     [SerializeField] private float gravity;
+    [SerializeField] private float hitStunDuration;
+    [SerializeField] private float hitStunMult;
     private float gravityRate = 1f;
     
     private bool hitStun;
     private CharacterController controller;
-    private float hitStunTime = 0.2f;
+    private float hitStunTime;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         controller.detectCollisions = false;
+        hitStunTime = hitStunDuration;
     }
 
     void Update()
@@ -30,8 +33,8 @@ public class PlayerController : MonoBehaviour
             if (hitStunTime <= 0.0f)
             {
                 hitStun = false;
-                hitStunTime = 0.2f;
-                movementSpeed = movementSpeed * 2;
+                hitStunTime = hitStunDuration;
+                movementSpeed = movementSpeed * hitStunMult;
             }
         }
         //GET THE CHARACTER CONTROLLER AND DIRECTION OF MOVEMENT IN RELATION TO SPEED
@@ -103,11 +106,11 @@ public class PlayerController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
+        HP = HP - damage;
         if (hitStun == false)
         {
-            HP = HP - damage;
             hitStun = true;
-            movementSpeed = movementSpeed / 2;
+            movementSpeed = movementSpeed / hitStunMult;
         }
     }
 }
