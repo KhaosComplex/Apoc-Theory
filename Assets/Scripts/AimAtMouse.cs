@@ -3,16 +3,16 @@ using System.Collections;
 
 public class AimAtMouse : MonoBehaviour
 {
-    private GameObject playerObject;
-    private Transform playerTransform;
+    private GameObject gunObject;
+    private Transform gunTransform;
 
     void Start()
     {
-        //GET REFERENCE TO PLAYER OBJECT TRANSFORM
-        playerObject = GameObject.FindWithTag("Player");
-        if (playerObject != null)
+        //GET REFERENCE TO GUN OBJECT TRANSFORM
+        gunObject = GameObject.FindWithTag("Gun");
+        if (gunObject != null)
         {
-            playerTransform = playerObject.transform;
+            gunTransform = gunObject.transform;
         }
     }
 
@@ -30,7 +30,7 @@ public class AimAtMouse : MonoBehaviour
         if (Physics.Raycast(rayCameraToMouse, out hit, 100))
         {
             //GET THE ANGLE BETWEEN BOTH POINTS
-            float angle = AngleBetweenTwoPoints(new Vector2(playerTransform.position.x, playerTransform.position.z), new Vector2(hit.point.x, hit.point.z));
+            float angle = AngleBetweenTwoPoints(new Vector2(gunTransform.position.x, gunTransform.position.z), new Vector2(hit.point.x, hit.point.z));
 
             //ROTATE IN THE DIRECTION OF THE MOUSE (OFFSET 90 FOR PROPER FORWARD AXIS)
             transform.rotation = Quaternion.Euler(new Vector3(0f, angle + 90, 0f));
