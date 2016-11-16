@@ -57,12 +57,17 @@ public class PlayerController : MonoBehaviour
             gravityRate = jumpSpeed;
         }
 
+        //****BUG WITH isGrounded***** APPLY A DOWNWARD FORCE IF ON THE GROUND TO KEEP isGrounded TRUE
+        if (controller.isGrounded) moveDirection.y = gravityRate;
+
+        //MOVE THE PLAYER
         controller.Move(moveDirection * Time.deltaTime);
 
     }
 
     void FixedUpdate()
     {
+        //****BUG WITH isGrounded***** APPLY A DOWNWARD FORCE IF ON THE GROUND, OTHERWISE APPLY GRAVITY
         if (controller.isGrounded) gravityRate = -1f;
         else gravityRate += gravity;
 
