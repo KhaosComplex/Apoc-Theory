@@ -12,17 +12,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity;
     [SerializeField] private float hitStunDuration;
     [SerializeField] private float hitStunMult;
+    [SerializeField] private float meleeRange;
+    [SerializeField] private float meleeRate;
+    [SerializeField] private float meleeDamage;
     private float gravityRate = 1f;
     
     private bool hitStun;
     private CharacterController controller;
     private float hitStunTime;
+    private Vector3 playerPoint;
+    private Vector3 bossPoint;
+    private float distanceToBoss;
+    private bool inMelee = false;
+    private float nextMelee = 0.5f;
+    private GameObject bossObject;
+    private GameObject meleeBoxObject;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         controller.detectCollisions = false;
         hitStunTime = hitStunDuration;
+        bossObject = GameObject.FindWithTag("Boss");
+        meleeBoxObject = GameObject.FindWithTag("MeleeBox");
     }
 
     void Update()
@@ -47,7 +59,8 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.TransformDirection(moveDirection);
 
         //ROTATE THE PLAYER MODEL IN THE DIRECTION THE PLAYER IS MOVING
-        childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
+        if(horizontalMovement != 0 || verticalMovement != 0)
+            childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
 
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
@@ -81,6 +94,32 @@ public class PlayerController : MonoBehaviour
         //MOVE THE PLAYER
         controller.Move(moveDirection * Time.deltaTime);
 
+        //MELEE DISTANCE CALCULATIONS
+        playerPoint = gameObject.GetComponent<Collider>().ClosestPointOnBounds(bossObject.transform.position);
+        bossPoint = bossObject.gameObject.GetComponent<Collider>().ClosestPointOnBounds(gameObject.transform.position);
+
+        distanceToBoss = Vector3.Distance(playerPoint, bossPoint);
+
+        //MELEE CHECKS
+        if (inMelee == false && distanceToBoss <= meleeRange)
+        {
+            GameObject.FindWithTag("Gun").GetComponent<PlayerShooter>().setMelee(true);
+            inMelee = true;
+        }
+        else
+        {
+            GameObject.FindWithTag("Gun").GetComponent<PlayerShooter>().setMelee(false);
+            inMelee = false;
+        }
+
+        //MELEE DAMAGE
+        if (inMelee)
+        {
+            if (Input.GetButton("Fire1") && Time.time > nextMelee)
+            {
+                nextMelee = Time.time + meleeRate;
+            }
+        }
     }
 
     void FixedUpdate()
