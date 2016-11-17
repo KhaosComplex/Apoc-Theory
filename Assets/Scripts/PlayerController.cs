@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private float gravityRate = 1f;
     
     private bool hitStun;
+    private bool isGrounded;
+    private float distToGround;
     private CharacterController controller;
     private float hitStunTime;
     private Vector3 playerPoint;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.detectCollisions = false;
+        distToGround = GetComponent<Collider>().bounds.extents.y;
         hitStunTime = hitStunDuration;
         bossObject = GameObject.FindWithTag("Boss");
         meleeBoxObject = GameObject.FindWithTag("MeleeBox");
@@ -82,14 +85,22 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //IF PLAYER IS ON THE GROUND AND SPACE IS PRESSED
-        if (controller.isGrounded && Input.GetKeyDown(KeyCode.Space))
+        //IF PLAYER IS ON THE GROUND
+        if (isGrounded)
         {
-            gravityRate = jumpSpeed;
+            //AND SPACE IS PRESSED
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gravityRate = jumpSpeed;
+                moveDirection.y = gravityRate;
+                isGrounded = false;
+            }
         }
-
-        //****BUG WITH isGrounded***** APPLY A DOWNWARD FORCE IF ON THE GROUND TO KEEP isGrounded TRUE
-        if (controller.isGrounded) moveDirection.y = gravityRate;
+        //AS LONG AS PLAYER IS IN THE AIR CONSTANTLY CHECK TO SEE IF HE HAS GROUNDED
+        else
+        {
+            isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        }
 
         //MOVE THE PLAYER
         controller.Move(moveDirection * Time.deltaTime);
@@ -124,8 +135,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //****BUG WITH isGrounded***** APPLY A DOWNWARD FORCE IF ON THE GROUND, OTHERWISE APPLY GRAVITY
-        if (controller.isGrounded) gravityRate = -1f;
+        //APPLY GRAVITY ONLY IF IN THE AIR
+        if (isGrounded) gravityRate = 0;
         else gravityRate += gravity;
 
         Vector3 gravityVector = new Vector3(0, gravityRate, 0);
