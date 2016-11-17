@@ -33,7 +33,7 @@ public class AimAtMouse : MonoBehaviour
             float angle = AngleBetweenTwoPoints(new Vector2(gunTransform.position.x, gunTransform.position.z), new Vector2(hit.point.x, hit.point.z));
 
             //ROTATE IN THE DIRECTION OF THE MOUSE (OFFSET 90 FOR PROPER FORWARD AXIS)
-            transform.rotation = Quaternion.Euler(new Vector3(0f, angle + 90, 0f));
+            transform.rotation = Quaternion.Euler(new Vector3(0f, angle + 180, 0f));
         }
 
     }
