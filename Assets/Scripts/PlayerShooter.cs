@@ -26,5 +26,9 @@ public class PlayerShooter : MonoBehaviour
     public void setMelee(bool set)
     {
         inMeleeRange = set;
+        if (set)
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+        else
+            gameObject.GetComponent<MeshRenderer>().enabled = true;
     }
 }

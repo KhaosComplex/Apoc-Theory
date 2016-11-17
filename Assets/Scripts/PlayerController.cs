@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity;
     [SerializeField] private float hitStunDuration;
     [SerializeField] private float hitStunMult;
-    [SerializeField] private float meleeRange;
+    [SerializeField] private float meleeSwitchRange;
     [SerializeField] private float meleeRate;
     [SerializeField] private float meleeDamage;
     private float gravityRate = 1f;
@@ -101,12 +101,12 @@ public class PlayerController : MonoBehaviour
         distanceToBoss = Vector3.Distance(playerPoint, bossPoint);
 
         //MELEE CHECKS
-        if (inMelee == false && distanceToBoss <= meleeRange)
+        if (inMelee == false && distanceToBoss <= meleeSwitchRange)
         {
             GameObject.FindWithTag("Gun").GetComponent<PlayerShooter>().setMelee(true);
             inMelee = true;
         }
-        else
+        if (inMelee == true && distanceToBoss > meleeSwitchRange)
         {
             GameObject.FindWithTag("Gun").GetComponent<PlayerShooter>().setMelee(false);
             inMelee = false;
