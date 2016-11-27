@@ -163,4 +163,9 @@ public class PlayerController : MonoBehaviour
             movementSpeed = movementSpeed / hitStunMult;
         }
     }
+
+    public bool isInMelee()
+    {
+        return inMelee;
+    }
 }
