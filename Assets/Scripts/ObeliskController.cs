@@ -16,14 +16,14 @@ public class ObeliskController : MonoBehaviour {
 
     void Start ()
     {
-        currentTime = Time.time;
+        currentTime = Time.timeSinceLevelLoad;
 
         playerObject = GameObject.FindWithTag("Player");
     }
 	
 	// Update is called once per frame
 	void Update () {
-	    if ((Time.time - currentTime) >= timeToWait) {
+	    if ((Time.timeSinceLevelLoad - currentTime) >= timeToWait) {
             switch(direction)
             {
                 //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD

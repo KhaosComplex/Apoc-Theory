@@ -69,6 +69,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BossShockwaveController.cs" />
+    <Compile Include="Assets\CameraMelee.cs" />
+    <Compile Include="Assets\CameraOrthographic.cs" />
     <Compile Include="Assets\Scripts\AimAtMouse.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
     <Compile Include="Assets\Scripts\BossObeliskController.cs" />
@@ -79,10 +82,13 @@
     <Compile Include="Assets\Scripts\CameraLookAtPlayer.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\MeleeController.cs" />
+    <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\ObeliskController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerShooter.cs" />
     <Compile Include="Assets\Scripts\PlayerShotController.cs" />
+    <Compile Include="Assets\Scripts\ShockController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

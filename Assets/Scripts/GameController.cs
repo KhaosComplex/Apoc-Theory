@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour {
             gameOverText.enabled = true;
             if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
             }
         }
     }

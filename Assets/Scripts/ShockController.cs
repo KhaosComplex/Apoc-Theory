@@ -6,6 +6,16 @@ public class ShockController : MonoBehaviour {
     [SerializeField] private float moveSpeed;
     [SerializeField] private float stretchSpeed;
     [SerializeField] private float waitTime;
+
+    [SerializeField] private float damage;
+
+    private GameObject playerObject;
+    private bool slammed;
+
+    void Start()
+    {
+        playerObject = GameObject.FindWithTag("Player");
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,4 +34,13 @@ public class ShockController : MonoBehaviour {
             Destroy(gameObject.transform.parent.gameObject);
         }
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            playerObject.GetComponent<PlayerController>().takeDamage(damage);
+        }
+    }
 }

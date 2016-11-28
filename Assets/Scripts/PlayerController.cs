@@ -126,9 +126,9 @@ public class PlayerController : MonoBehaviour
         //MELEE DAMAGE
         if (inMelee)
         {
-            if (Input.GetButton("Fire1") && Time.time > nextMelee)
+            if (Input.GetButton("Fire1") && Time.timeSinceLevelLoad > nextMelee)
             {
-                nextMelee = Time.time + meleeRate;
+                nextMelee = Time.timeSinceLevelLoad + meleeRate;
             }
         }
     }

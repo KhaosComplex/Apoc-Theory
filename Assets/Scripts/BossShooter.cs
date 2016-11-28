@@ -29,9 +29,9 @@ public class BossShooter : MonoBehaviour
             movingRight = true;
 
         //NOW MAKE SURE THE GUN FIRES CONSISTENT WITH THE FIRE RATE
-        if (Time.time > nextFire)
+        if (Time.timeSinceLevelLoad > nextFire)
         {
-            nextFire = Time.time + fireRate;
+            nextFire = Time.timeSinceLevelLoad + fireRate;
             GameObject shotHolder = (GameObject)Instantiate(shot, controller.position, controller.rotation);
             shotHolder.transform.parent = GameObject.Find("Boss Shots").transform;
         }
