@@ -23,7 +23,7 @@ public class CameraLookAtPlayer : MonoBehaviour
     {
         //SAVE THE STARTING POSITIONS SO WE CAN REFERENCE THEM LATER IN OUR CAMERA TRANSFORMS
         startingPlayerPositionX = player.transform.position.x;
-        startingPlayerPositionZ = player.transform.position.y;
+        startingPlayerPositionZ = player.transform.position.z;
         startingCameraPosition = transform.position;
     }
 

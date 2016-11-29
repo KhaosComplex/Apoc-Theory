@@ -72,6 +72,7 @@
     <Compile Include="Assets\BossShockwaveController.cs" />
     <Compile Include="Assets\CameraMelee.cs" />
     <Compile Include="Assets\CameraOrthographic.cs" />
+    <Compile Include="Assets\CameraPerspectiveZoom.cs" />
     <Compile Include="Assets\Scripts\AimAtMouse.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
     <Compile Include="Assets\Scripts\BossObeliskController.cs" />

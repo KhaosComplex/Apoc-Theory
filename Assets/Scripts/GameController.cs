@@ -15,8 +15,6 @@ public class GameController : MonoBehaviour {
     [SerializeField] private Text playerHPText;
     [SerializeField] private Text bossHPText;
     [SerializeField] private Text gameOverText;
-    [SerializeField] Camera overheadCamera;
-    [SerializeField] Camera meleeCamera;
 
     private bool gameOver = false;
 
@@ -25,9 +23,6 @@ public class GameController : MonoBehaviour {
         playerController = playerObject.GetComponent<PlayerController>();
         bossController = bossObject.GetComponent<BossController>();
         gameOverText.enabled = false;
-
-        overheadCamera.enabled = true;
-        meleeCamera.enabled = false;
     }
 
     void Update()
@@ -46,17 +41,6 @@ public class GameController : MonoBehaviour {
         }
         playerHPText.text = ("Player HP: " + playerHP);
         bossHPText.text = ("Boss HP: " + bossHP);
-
-        if (playerController.isInMelee())
-        {
-            overheadCamera.enabled = false;
-            meleeCamera.enabled = true;
-        }
-        else
-        {
-            overheadCamera.enabled = true;
-            meleeCamera.enabled = false;
-        }
 
         if (gameOver == true)
         {
