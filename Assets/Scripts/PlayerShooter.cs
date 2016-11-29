@@ -8,7 +8,7 @@ public class PlayerShooter : MonoBehaviour
     [SerializeField] private Transform shotSpawn;
 
     [SerializeField] private float fireRate;
-    private float nextFire = 0.5f;
+    private float nextFire;
     private bool inMeleeRange = false;
 
     void Update()

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float dashDistance;
+    [SerializeField] private float dashCooldown;
     [SerializeField] private float HP;
     [SerializeField] private float gravity;
     [SerializeField] private float hitStunDuration;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float distToGround;
     private CharacterController controller;
     private float hitStunTime;
+    private float nextDash;
     private Vector3 playerPoint;
     private Vector3 bossPoint;
     private float distanceToBoss;
@@ -66,22 +68,28 @@ public class PlayerController : MonoBehaviour
             childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
 
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
+        if (Time.timeSinceLevelLoad > nextDash)
         {
-            // GET THE CHANGE IN DISTANCE REQUIRED TO DASH (AKA DIRECTION)
-            float deltaX = horizontalMovement;
-            float deltaZ = verticalMovement;
-
-            // AS LONG AS BOTH DISTANCES AREN'T 0
-            if (!(deltaX == 0 && deltaZ == 0))
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
             {
-                //GET THE HYPOTENUSE OF THE TWO DISTANCES
-                float hyp = Mathf.Pow(Mathf.Pow(deltaX, 2f) + Mathf.Pow(deltaZ, 2f), .5f);
-                //FIGURE OUT THE APPROPIATE RATE TO APPLY TO DELTAX/Y TO TRAVEL THE DASH DISTANCE IN THE PROPER DIRECTION
-                float rate = dashDistance / hyp;
+                // GET THE CHANGE IN DISTANCE REQUIRED TO DASH (AKA DIRECTION)
+                float deltaX = horizontalMovement;
+                float deltaZ = verticalMovement;
 
-                //FINALLY, SET THE POSITION
-                transform.position = new Vector3(transform.position.x + (deltaX * rate), transform.position.y, transform.position.z + (deltaZ * rate));
+                // AS LONG AS BOTH DISTANCES AREN'T 0
+                if (!(deltaX == 0 && deltaZ == 0))
+                {
+                    //GET THE HYPOTENUSE OF THE TWO DISTANCES
+                    float hyp = Mathf.Pow(Mathf.Pow(deltaX, 2f) + Mathf.Pow(deltaZ, 2f), .5f);
+                    //FIGURE OUT THE APPROPIATE RATE TO APPLY TO DELTAX/Y TO TRAVEL THE DASH DISTANCE IN THE PROPER DIRECTION
+                    float rate = dashDistance / hyp;
+
+                    //FINALLY, SET THE POSITION
+                    transform.position = new Vector3(transform.position.x + (deltaX * rate), transform.position.y, transform.position.z + (deltaZ * rate));
+
+                    //LASTLY SET OUR DASH COOLDOWN INTO EFFECT
+                    nextDash = Time.timeSinceLevelLoad + dashCooldown;
+                }
             }
         }
 
