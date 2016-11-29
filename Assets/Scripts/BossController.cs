@@ -6,7 +6,13 @@ public class BossController : MonoBehaviour {
     [SerializeField] private float HP;
     [SerializeField] private Attack attack;
 
+    private float maxHP;
     private bool meleeMode = false;
+
+    void Start()
+    {
+        maxHP = HP;
+    }
 
     class Attack
     {
@@ -24,6 +30,11 @@ public class BossController : MonoBehaviour {
     public float getHP()
     {
         return HP;
+    }
+
+    public float getMaxHP()
+    {
+        return maxHP;
     }
 
     public void setHP(float newHP)

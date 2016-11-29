@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float meleeRate;
     [SerializeField] private float meleeDamage;
     private float gravityRate = 1f;
-    
+
+    private float maxHP;
     private bool hitStun;
     private bool isGrounded;
     private float distToGround;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        maxHP = HP;
         controller = GetComponent<CharacterController>();
         controller.detectCollisions = false;
         distToGround = GetComponent<Collider>().bounds.extents.y;
@@ -155,6 +157,11 @@ public class PlayerController : MonoBehaviour
     public float getHP()
     {
         return HP;
+    }
+
+    public float getMaxHP()
+    {
+        return maxHP;
     }
 
     public void setHP(float newHP)
