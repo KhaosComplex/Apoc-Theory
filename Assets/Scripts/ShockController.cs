@@ -10,7 +10,6 @@ public class ShockController : MonoBehaviour {
     [SerializeField] private float damage;
 
     private GameObject playerObject;
-    private bool slammed;
 
     void Start()
     {
