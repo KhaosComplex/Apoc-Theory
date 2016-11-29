@@ -5,6 +5,7 @@ public class BossController : MonoBehaviour {
     
     [SerializeField] private float HP;
     [SerializeField] private Attack attack;
+    private bool immune;
 
     private float maxHP;
     private bool meleeMode = false;
@@ -12,6 +13,21 @@ public class BossController : MonoBehaviour {
     void Start()
     {
         maxHP = HP;
+    }
+
+    void Update()
+    {
+        immune = (GetComponent<BossObeliskBossShotController>().isImmune());
+
+        Component[] bossShooters = GetComponentsInChildren<BossShooter>();
+        foreach (BossShooter bossShooterScript in bossShooters)
+        {
+            if (immune)
+                bossShooterScript.enabled = false;
+            else
+                bossShooterScript.enabled = true;
+        }
+
     }
 
     class Attack
@@ -45,5 +61,10 @@ public class BossController : MonoBehaviour {
     public void takeDamage(float damage)
     {
         HP = HP - damage;
+    }
+
+    public bool isImmune()
+    {
+        return immune;
     }
 }

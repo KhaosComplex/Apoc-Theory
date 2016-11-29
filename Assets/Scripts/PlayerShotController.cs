@@ -8,6 +8,7 @@ public class PlayerShotController : MonoBehaviour
     [SerializeField] private float damage;
     private Rigidbody rb;
     private GameObject bossObject;
+    private GameObject obeliskBossShotObject;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class PlayerShotController : MonoBehaviour
         rb.velocity = transform.forward * speed;
 
         bossObject = GameObject.FindWithTag("Boss");
+        obeliskBossShotObject = GameObject.FindWithTag("ObeliskBossShot");
     }
 
     void OnTriggerEnter(Collider other)
@@ -23,7 +25,14 @@ public class PlayerShotController : MonoBehaviour
         //IF BOSS GETS HIT, HAVE BOSS LOSE HEALTH
         if (other.gameObject.tag.Equals("Boss"))
         {
-            bossObject.GetComponent<BossController>().takeDamage(damage);
+            BossController bossController = bossObject.GetComponent<BossController>();
+            if (!bossController.isImmune()) bossController.takeDamage(damage);
+
+            Destroy(this.gameObject);
+        }
+        else if (other.gameObject.tag.Equals("ObeliskBossShot"))
+        {
+            obeliskBossShotObject.GetComponent<ObeliskBossShotController>().takeDamage(damage);
             Destroy(this.gameObject);
         }
     }

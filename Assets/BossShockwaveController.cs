@@ -31,7 +31,6 @@ public class BossShockwaveController : MonoBehaviour
                 shockwaveInstance = (GameObject)Instantiate(shockwaveUP, new Vector3(0, 0, -42.77f), shockwaveUP.transform.rotation);
                 timeToSpawnShockwave = Time.timeSinceLevelLoad + timeBetweenShockwaveSpawn;
             }
-            Debug.Log(whichShockwaveToSpawn);
         }
     }
 }
