@@ -139,6 +139,8 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButton("Fire1") && Time.timeSinceLevelLoad > nextMelee)
             {
                 nextMelee = Time.timeSinceLevelLoad + meleeRate;
+                if (meleeBoxObject.GetComponent<MeleeController>().doesDamage() == true)
+                    bossObject.GetComponent<BossController>().takeDamage(meleeDamage);
             }
         }
     }
