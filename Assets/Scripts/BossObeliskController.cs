@@ -21,6 +21,7 @@ public class BossObeliskController : MonoBehaviour {
         if (nextObeliskPattern == whichObeliskToSpawn.Length)
         {
             nextObeliskPattern = 0;
+            BossController.ShuffleArray<int>(whichObeliskToSpawn);
         }
 
         bool immune = GetComponent<BossObeliskBossShotController>().isImmune();
