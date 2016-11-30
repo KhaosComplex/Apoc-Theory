@@ -13,7 +13,6 @@ public class BossShockwaveController : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad >= timeToSpawnShockwave)
         {
-            Debug.Log(transform.TransformPoint(0,0,0));
             whichShockwaveToSpawn = Random.Range(0, 3);
             if (whichShockwaveToSpawn == 0)
             {

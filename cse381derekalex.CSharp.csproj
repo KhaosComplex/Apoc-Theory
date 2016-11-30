@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BossBurstShooter.cs" />
     <Compile Include="Assets\BossObeliskBossShotController.cs" />
     <Compile Include="Assets\BossShockwaveController.cs" />
     <Compile Include="Assets\CameraMelee.cs" />

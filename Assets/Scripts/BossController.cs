@@ -1,33 +1,91 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossController : MonoBehaviour {
-    
-    [SerializeField] private float HP;
-    [SerializeField] private Attack attack;
+public class BossController : MonoBehaviour
+{
+
+    [SerializeField]
+    private float HP;
+    [SerializeField]
+    private Attack attack;
     private bool immune;
 
     private float maxHP;
     private bool meleeMode = false;
 
+    public enum Stages { first, second, third };
+    private Stages currentStage;
+
+    private Component[] bossBurstShooters;
+    private Component[] bossLRShooters;
+    private BossObeliskController bossObeliskController;
+
+
     void Start()
     {
         maxHP = HP;
+        bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
+        bossLRShooters = GetComponentsInChildren<BossShooter>();
+        bossObeliskController = GetComponent<BossObeliskController>();
+
+        firstStage();
+
     }
 
     void Update()
     {
-        immune = (GetComponent<BossObeliskBossShotController>().isImmune());
-
-        Component[] bossShooters = GetComponentsInChildren<BossShooter>();
-        foreach (BossShooter bossShooterScript in bossShooters)
+        if (currentStage != Stages.second && HP > maxHP / 3 && HP <= maxHP * 2 / 3)
         {
-            if (immune)
-                bossShooterScript.enabled = false;
-            else
-                bossShooterScript.enabled = true;
+            currentStage = Stages.second;
+            secondStage();
+        }
+        else if (currentStage != Stages.third && HP <= maxHP / 3)
+        {
+            currentStage = Stages.third;
         }
 
+        switch (currentStage)
+        {
+            case Stages.first:
+                break;
+            case Stages.second:
+
+                break;
+            case Stages.third:
+
+                immune = (GetComponent<BossObeliskBossShotController>().isImmune());
+
+                Component[] bossShooters = GetComponentsInChildren<BossBurstShooter>();
+                foreach (BossBurstShooter bossShooterScript in bossShooters)
+                {
+                    if (immune)
+                        bossShooterScript.enabled = false;
+                    else
+                        bossShooterScript.enabled = true;
+                }
+                break;
+        }
+
+    }
+
+    private void firstStage()
+    {
+        currentStage = Stages.first;
+
+        foreach (BossBurstShooter bossShooterScript in bossBurstShooters)
+        {
+            bossShooterScript.enabled = true;
+        }
+
+        bossObeliskController.setCurrentStage(currentStage);
+        bossObeliskController.enabled = true;
+    }
+
+    private void secondStage()
+    {
+        currentStage = Stages.second;
+
+        bossObeliskController.setCurrentStage(currentStage);
     }
 
     class Attack
@@ -66,5 +124,16 @@ public class BossController : MonoBehaviour {
     public bool isImmune()
     {
         return immune;
+    }
+
+    public static void ShuffleArray<T>(T[] arr)
+    {
+        for (int i = arr.Length - 1; i > 0; i--)
+        {
+            int r = Random.Range(0, i + 1);
+            T tmp = arr[i];
+            arr[i] = arr[r];
+            arr[r] = tmp;
+        }
     }
 }
