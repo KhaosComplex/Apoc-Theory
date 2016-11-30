@@ -19,10 +19,25 @@ public class BossObeliskBossShotController : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad >= timeToSpawnObeliskBossShots)
         {
-            obeliskBossShotInstances[0] = (GameObject)Instantiate(obeliskBossShot, new Vector3(-18.70f, 8.50f, 9.30f), obeliskBossShot.transform.rotation);
-            obeliskBossShotInstances[1] = (GameObject)Instantiate(obeliskBossShot, new Vector3(16.37f, 8.50f, 10.10f), obeliskBossShot.transform.rotation * Quaternion.Euler(0, 90, 0));
-            obeliskBossShotInstances[2] = (GameObject)Instantiate(obeliskBossShot, new Vector3(15.43f, 8.50f, -19.78f), obeliskBossShot.transform.rotation * Quaternion.Euler(0, 180, 0));
-            obeliskBossShotInstances[3] = (GameObject)Instantiate(obeliskBossShot, new Vector3(-16.80f, 8.50f, -20.30f), obeliskBossShot.transform.rotation * Quaternion.Euler(0, 270, 0));
+            obeliskBossShotInstances[0] = (GameObject)Instantiate(obeliskBossShot, transform.TransformPoint(
+                -18.70f / transform.localScale.x, 
+                3.5f / transform.localScale.y, 
+                -30f / transform.localScale.z), obeliskBossShot.transform.rotation);
+
+            obeliskBossShotInstances[1] = (GameObject)Instantiate(obeliskBossShot, transform.TransformPoint(
+                16.37f / transform.localScale.x,
+                3.5f / transform.localScale.y, 
+                -30f / transform.localScale.z), obeliskBossShot.transform.rotation * Quaternion.Euler(0, 90, 0));
+
+            obeliskBossShotInstances[2] = (GameObject)Instantiate(obeliskBossShot, transform.TransformPoint(
+                15.43f / transform.localScale.x,
+                3.5f / transform.localScale.y, 
+                -50f / transform.localScale.z), obeliskBossShot.transform.rotation * Quaternion.Euler(0, 180, 0));
+
+            obeliskBossShotInstances[3] = (GameObject)Instantiate(obeliskBossShot, transform.TransformPoint(
+                -16.80f / transform.localScale.x,
+                3.5f / transform.localScale.y, 
+                -50f / transform.localScale.z), obeliskBossShot.transform.rotation * Quaternion.Euler(0, 270, 0));
         }
 
         int deadObeliskCount = 0;

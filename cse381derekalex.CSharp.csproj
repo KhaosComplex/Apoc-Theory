@@ -93,6 +93,8 @@
     <Compile Include="Assets\Scripts\PlayerShooter.cs" />
     <Compile Include="Assets\Scripts\PlayerShotController.cs" />
     <Compile Include="Assets\Scripts\ShockController.cs" />
+    <Compile Include="Assets\Scripts\SlamController.cs" />
+    <Compile Include="Assets\Scripts\SwipeController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

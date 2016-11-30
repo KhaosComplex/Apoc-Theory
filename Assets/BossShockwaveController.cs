@@ -13,22 +13,34 @@ public class BossShockwaveController : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad >= timeToSpawnShockwave)
         {
-            GameObject shockwaveInstance;
+            Debug.Log(transform.TransformPoint(0,0,0));
             whichShockwaveToSpawn = Random.Range(0, 3);
             if (whichShockwaveToSpawn == 0)
             {
-                shockwaveInstance = (GameObject)Instantiate(shockwave, new Vector3(0, 0, -42.77f), shockwave.transform.rotation);
+                Instantiate(shockwave, transform.TransformPoint(
+                    0 / transform.localScale.x,
+                    -3.5f / transform.localScale.y,
+                    -9.6f / transform.localScale.z), shockwave.transform.rotation);
                 timeToSpawnShockwave = Time.timeSinceLevelLoad + timeBetweenShockwaveSpawn;
             }
             else if (whichShockwaveToSpawn == 1)
             {
-                shockwaveInstance = (GameObject)Instantiate(shockwaveUP, new Vector3(0, 0, -42.77f), shockwaveUP.transform.rotation);
+                Instantiate(shockwaveUP, transform.TransformPoint(
+                    0 / transform.localScale.x,
+                    -3.5f / transform.localScale.y,
+                    -9.6f / transform.localScale.z), shockwaveUP.transform.rotation);
                 timeToSpawnShockwave = Time.timeSinceLevelLoad + timeBetweenShockwaveSpawn;
             }
             else
             {
-                shockwaveInstance = (GameObject)Instantiate(shockwave, new Vector3(0, 0, -42.77f), shockwave.transform.rotation);
-                shockwaveInstance = (GameObject)Instantiate(shockwaveUP, new Vector3(0, 0, -42.77f), shockwaveUP.transform.rotation);
+                Instantiate(shockwave, transform.TransformPoint(
+                    0 / transform.localScale.x,
+                    -3.5f / transform.localScale.y,
+                    -9.6f / transform.localScale.z), shockwave.transform.rotation);
+                Instantiate(shockwaveUP, transform.TransformPoint(
+                    0 / transform.localScale.x,
+                    -3.5f / transform.localScale.y,
+                    -9.6f / transform.localScale.z), shockwaveUP.transform.rotation);
                 timeToSpawnShockwave = Time.timeSinceLevelLoad + timeBetweenShockwaveSpawn;
             }
         }
