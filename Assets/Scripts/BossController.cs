@@ -19,6 +19,10 @@ public class BossController : MonoBehaviour
     private Component[] bossBurstShooters;
     private Component[] bossLRShooters;
     private BossObeliskController bossObeliskController;
+    private BossObeliskBossShotController bossObeliskBossShotController;
+    private BossObeliskHoneInController bossObeliskHoneInController;
+    private BossShockwaveController bossShockwaveController;
+
 
 
     void Start()
@@ -27,6 +31,9 @@ public class BossController : MonoBehaviour
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
         bossObeliskController = GetComponent<BossObeliskController>();
+        bossObeliskHoneInController = GetComponent<BossObeliskHoneInController>();
+        bossObeliskBossShotController = GetComponent<BossObeliskBossShotController>();
+        bossShockwaveController = GetComponent<BossShockwaveController>();
 
         firstStage();
 
@@ -42,6 +49,7 @@ public class BossController : MonoBehaviour
         else if (currentStage != Stages.third && HP <= maxHP / 3)
         {
             currentStage = Stages.third;
+            thirdStage();
         }
 
         switch (currentStage)
@@ -79,6 +87,12 @@ public class BossController : MonoBehaviour
 
         bossObeliskController.setCurrentStage(currentStage);
         bossObeliskController.enabled = true;
+
+        bossObeliskHoneInController.setCurrentStage(currentStage);
+        bossObeliskHoneInController.enabled = true;
+
+        bossShockwaveController.setCurrentStage(currentStage);
+        bossShockwaveController.enabled = true;
     }
 
     private void secondStage()
@@ -86,6 +100,14 @@ public class BossController : MonoBehaviour
         currentStage = Stages.second;
 
         bossObeliskController.setCurrentStage(currentStage);
+    }
+
+    private void thirdStage()
+    {
+        currentStage = Stages.third;
+
+        bossObeliskController.setCurrentStage(currentStage);
+        bossShockwaveController.setCurrentStage(currentStage);
     }
 
     class Attack

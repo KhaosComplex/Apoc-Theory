@@ -8,5 +8,11 @@ public class DestroyByBoundary : MonoBehaviour {
         if(!other.gameObject.tag.Equals("Player") && !other.gameObject.tag.Equals("Attack"))
             Destroy(other.gameObject);
     }
-	
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (!other.gameObject.tag.Equals("Player") && !other.gameObject.tag.Equals("Attack"))
+            Destroy(other.gameObject);
+    }
+
 }

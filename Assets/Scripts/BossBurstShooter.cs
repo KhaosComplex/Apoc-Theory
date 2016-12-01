@@ -6,12 +6,13 @@ public class BossBurstShooter : MonoBehaviour
     [SerializeField] private Transform controller;
     [SerializeField] private Transform start;
     [SerializeField] private Transform end;
-    [SerializeField] private float speed;
     [SerializeField] private GameObject shot;
 
     [SerializeField] private float rotationRateY;
     [SerializeField] private float timeBetweenBursts = 10.0f;
     [SerializeField] private float timeToStart;
+    [SerializeField] private float offsetValueX;
+    [SerializeField] private float offsetValueZ;
 
     [SerializeField] private bool movingRight;
 
@@ -43,12 +44,14 @@ public class BossBurstShooter : MonoBehaviour
                     movingRight = false;
                     isFiring = false;
                     timeToStart = Time.timeSinceLevelLoad + timeBetweenBursts;
+                    controller.position += new Vector3(offsetValueX, 0, offsetValueZ);
                 }
                 else if (movingRight == false && controller.eulerAngles.y >= start.eulerAngles.y)
                 {
                     movingRight = true;
                     isFiring = false;
                     timeToStart = Time.timeSinceLevelLoad + timeBetweenBursts;
+                    controller.position -= new Vector3(offsetValueX, 0, offsetValueZ);
                 }
 
             }

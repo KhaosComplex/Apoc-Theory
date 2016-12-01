@@ -7,63 +7,68 @@ public class ObeliskController : MonoBehaviour {
     [SerializeField] private float speed;
     [SerializeField] private float damage;
 
-    private int direction;
-    private float currentTime;
+    private Directions direction;
+    private float timeToMove;
     private Rigidbody rb;
+    private BoxCollider boxCollider;
     private GameObject playerObject;
 
     public enum Directions {forward, backward, right, left };
 
     void Start ()
     {
-        currentTime = Time.timeSinceLevelLoad;
+        timeToMove = Time.timeSinceLevelLoad + timeToWait;
+
+        rb = GetComponent<Rigidbody>();
+        boxCollider = GetComponent<BoxCollider>();
 
         playerObject = GameObject.FindWithTag("Player");
     }
 	
 	// Update is called once per frame
 	void Update () {
-	    if ((Time.timeSinceLevelLoad - currentTime) >= timeToWait) {
+	    if (Time.timeSinceLevelLoad>= timeToMove) {
             switch(direction)
             {
                 //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD
-                case (int)Directions.forward:
-                    rb = GetComponent<Rigidbody>();
+                case Directions.forward:
                     rb.velocity = transform.forward * speed;
                     break;
-                case (int)Directions.backward:
-                    rb = GetComponent<Rigidbody>();
+                case Directions.backward:
                     rb.velocity = -transform.forward * speed;
                     break;
-                case (int)Directions.right:
-                    rb = GetComponent<Rigidbody>();
+                case Directions.right:
                     rb.velocity = transform.right * speed;
                     break;
-                case (int)Directions.left:
-                    rb = GetComponent<Rigidbody>();
+                case Directions.left:
                     rb.velocity = -transform.right * speed;
                     break;
             }
+
+            boxCollider.isTrigger = true;
         }
 	}
 
-    public int getDirection()
+    public Directions getDirection()
     {
         return direction;
     }
 
     public void setDirection(Directions directionToTravelIn)
     {
-        direction = (int)directionToTravelIn;
+        direction = directionToTravelIn;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
-        if (other.gameObject.tag.Equals("Player"))
+        if (Time.timeSinceLevelLoad >= timeToMove)
         {
-            playerObject.GetComponent<PlayerController>().takeDamage(damage);
-            Destroy(this.gameObject);
+            //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
+            if (other.gameObject.tag.Equals("Player"))
+            {
+                playerObject.GetComponent<PlayerController>().takeDamage(damage);
+                Destroy(this.gameObject);
+            }
         }
     }
 

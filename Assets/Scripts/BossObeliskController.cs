@@ -1,38 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossObeliskController : MonoBehaviour {
+public class BossObeliskController : MonoBehaviour
+{
 
-    [SerializeField] private GameObject obelisk;
-    [SerializeField] private float timeToSpawnObelisk;
-    [SerializeField] private float timeBetweenObeliskSpawn;
-    private int[] whichObeliskToSpawn = { 0, 1, 2 };
-    private int nextObeliskPattern;
+    [SerializeField]
+    private GameObject obelisk;
+    [SerializeField]
+    private float timeToSpawnObelisk;
+    [SerializeField]
+    private float timeBetweenObeliskSpawn;
+    private int[] firstStagePatterns = { 0, 1, 2 };
+    private int obeliskToSpawn;
 
     private BossController.Stages currentStage;
 
     void Start()
     {
-        BossController.ShuffleArray<int>(whichObeliskToSpawn);
+        //MAKE THE ORDER OF OBELISK PATTERN SPAWNS RANDOM
+        BossController.ShuffleArray<int>(firstStagePatterns);
     }
 
     void Update()
     {
-        if (nextObeliskPattern == whichObeliskToSpawn.Length)
-        {
-            nextObeliskPattern = 0;
-            BossController.ShuffleArray<int>(whichObeliskToSpawn);
-        }
+        autoReshufflePatterns(firstStagePatterns);
+
 
         bool immune = GetComponent<BossObeliskBossShotController>().isImmune();
 
+        //ONLY IF OUR BOSS ISN'T IN THE IMMUNE STATE, DO WE USE THE OBELISK ATTACKS
         if (!immune)
         {
+            //SPAWN BASED ON THE RATE
             if (Time.timeSinceLevelLoad >= timeToSpawnObelisk)
             {
-               if (currentStage == BossController.Stages.first)
+                //FIRST STAGE ATTACK
+                switch (currentStage)
                 {
-                    firstStageAttack();
+                    case BossController.Stages.first:
+                        firstStageAttack();
+                        break;
                 }
             }
         }
@@ -40,104 +47,22 @@ public class BossObeliskController : MonoBehaviour {
 
     private void firstStageAttack()
     {
-        GameObject obeliskInstant;
-        switch (whichObeliskToSpawn[nextObeliskPattern])
+        switch (firstStagePatterns[obeliskToSpawn])
         {
             case 0:
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    -5f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -6.5f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, 30, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    0 / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -7.5f / transform.localScale.z), obelisk.transform.rotation);
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    5f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -6.5f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, -30, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
-
-                timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                nextObeliskPattern++;
+                spawnTrianglePattern();
+                pushBackTimeTillSpawn();
+                obeliskToSpawn++;
                 break;
             case 1:
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    -19.5f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -59f / transform.localScale.z), obelisk.transform.rotation);
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    -9.75f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -59f / transform.localScale.z), obelisk.transform.rotation);
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    0 / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -59f / transform.localScale.z), obelisk.transform.rotation);
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    9.75f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -59f / transform.localScale.z), obelisk.transform.rotation);
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    19.5f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -59f / transform.localScale.z), obelisk.transform.rotation);
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                nextObeliskPattern++;
+                spawnBackArrayPattern();
+                pushBackTimeTillSpawn();
+                obeliskToSpawn++;
                 break;
             case 2:
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    -36f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -43.5f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    -28.5f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -51f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    -21f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -58.5f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    21f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -58.5f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    28.5f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -51f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(
-                    36f / transform.localScale.x,
-                    0 / transform.localScale.y,
-                    -43.5f / transform.localScale.z), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
-                obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-
-                timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                nextObeliskPattern++;
+                spawnConvergerSideCornerPattern();
+                pushBackTimeTillSpawn();
+                obeliskToSpawn++;
                 break;
         }
     }
@@ -147,48 +72,74 @@ public class BossObeliskController : MonoBehaviour {
         currentStage = stage;
     }
 
+    private void spawnTrianglePattern()
+    {
+        GameObject obeliskInstant;
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-.5f, 0, -.65f), obelisk.transform.rotation * Quaternion.Euler(0, 30, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(0, 0, -.75f), obelisk.transform.rotation);
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(.5f, 0, -.65f), obelisk.transform.rotation * Quaternion.Euler(0, -30, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
+    }
+
+    private void spawnBackArrayPattern()
+    {
+        GameObject obeliskInstant;
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-1.95f, 0, -5.9f), obelisk.transform.rotation);
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-.975f, 0, -5.9f), obelisk.transform.rotation);
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(0, 0, -5.9f), obelisk.transform.rotation);
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(.975f, 0, -5.9f), obelisk.transform.rotation);
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(1.95f, 0, -5.9f), obelisk.transform.rotation);
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+    }
+
+    private void spawnConvergerSideCornerPattern()
+    {
+        GameObject obeliskInstant;
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-3.6f, 0, -4.35f), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-2.85f, 0, -5.1f), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-2.1f, 0, -5.85f), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(2.1f, 0, -5.85f), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(2.85f, 0, -5.1f), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+
+        obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(3.6f, 0, -4.35f), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
+        obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+    }
+
+    private void pushBackTimeTillSpawn()
+    {
+        timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
+    }
+
+    private void autoReshufflePatterns(int[] obeliskPatterns)
+    {
+        //IF WE'VE REACHED THE END OF OUR LIST OF OBELISK PATTERNS
+        if (obeliskToSpawn == obeliskPatterns.Length)
+        {
+            //RESET THE POSITION BACK TO 0 AND RESHUFFLE THE PATTERNS
+            obeliskToSpawn = 0;
+            BossController.ShuffleArray<int>(obeliskPatterns);
+        }
+    }
 
 }
-
-                /*if (whichObeliskToSpawn == 0)
-                {
-                    obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(0, 0, -5f), obelisk.transform.rotation);
-                    obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.backward);
-                    timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                    whichObeliskToSpawn++;
-                }
-                else if (whichObeliskToSpawn == 1)
-                {
-                    obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-18.23f, 0, 13.5f), obelisk.transform.rotation);
-                    obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.right);
-                    timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                    whichObeliskToSpawn++;
-                }
-                else if (whichObeliskToSpawn == 2)
-                {
-                    obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(18.73f, 0, 5.28f), obelisk.transform.rotation);
-                    obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.left);
-                    timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                    whichObeliskToSpawn++;
-                }
-                else if (whichObeliskToSpawn == 3)
-                {
-                    obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-35f, 0, -3.9f), obelisk.transform.rotation);
-                    obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.right);
-                    timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                    whichObeliskToSpawn++;
-                }
-                else if (whichObeliskToSpawn == 4)
-                {
-                    obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(31f, 0, -9.91f), obelisk.transform.rotation);
-                    obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.left);
-                    timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn;
-                    whichObeliskToSpawn++;
-                }
-                else if (whichObeliskToSpawn == 5)
-                {
-                    obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-4.75f, 0, -21.64f), obelisk.transform.rotation);
-                    obeliskInstant.GetComponent<ObeliskController>().setDirection(ObeliskController.Directions.forward);
-                    timeToSpawnObelisk = Time.timeSinceLevelLoad + timeBetweenObeliskSpawn* 4;
-                    whichObeliskToSpawn = 0;
-                }*/

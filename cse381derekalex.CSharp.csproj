@@ -69,27 +69,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BossBurstShooter.cs" />
-    <Compile Include="Assets\BossObeliskBossShotController.cs" />
-    <Compile Include="Assets\BossShockwaveController.cs" />
-    <Compile Include="Assets\CameraMelee.cs" />
-    <Compile Include="Assets\CameraOrthographic.cs" />
-    <Compile Include="Assets\CameraPerspectiveZoom.cs" />
-    <Compile Include="Assets\ObeliskBossShotController.cs" />
-    <Compile Include="Assets\ObeliskBossShotShooter.cs" />
     <Compile Include="Assets\Scripts\AimAtMouse.cs" />
+    <Compile Include="Assets\Scripts\BossBurstShooter.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
+    <Compile Include="Assets\Scripts\BossObeliskBossShotController.cs" />
     <Compile Include="Assets\Scripts\BossObeliskController.cs" />
+    <Compile Include="Assets\Scripts\BossObeliskHoneInController.cs" />
+    <Compile Include="Assets\Scripts\BossShockwaveController.cs" />
     <Compile Include="Assets\Scripts\BossShooter.cs" />
     <Compile Include="Assets\Scripts\BossShotController.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtBoss.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtOrigin.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtPlayer.cs" />
+    <Compile Include="Assets\Scripts\CameraMelee.cs" />
+    <Compile Include="Assets\Scripts\CameraOrthographic.cs" />
+    <Compile Include="Assets\Scripts\CameraPerspectiveZoom.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MeleeController.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
+    <Compile Include="Assets\Scripts\ObeliskBossShotController.cs" />
+    <Compile Include="Assets\Scripts\ObeliskBossShotShooter.cs" />
     <Compile Include="Assets\Scripts\ObeliskController.cs" />
+    <Compile Include="Assets\Scripts\ObeliskHoneInController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerShooter.cs" />
     <Compile Include="Assets\Scripts\PlayerShotController.cs" />
