@@ -19,6 +19,9 @@ public class BossShockwaveController : MonoBehaviour
                 case BossController.Stages.first:
                     firstStageAttack();
                     break;
+                case BossController.Stages.second:
+                    secondStageAttack();
+                    break;
                 case BossController.Stages.third:
                     thirdStageAttack();
                     break;
@@ -31,6 +34,23 @@ public class BossShockwaveController : MonoBehaviour
         //SPAWN HORIZONTAL SHOCKWAVE
         spawnShockwaveHorizontal();
         pushBackTimeTillSpawn();
+    }
+
+    private void secondStageAttack()
+    {
+        switch (Random.Range(0, 2))
+        {
+            //SPAWN HORIZONTAL SHOCKWAVE
+            case 0:
+                spawnShockwaveHorizontal();
+                pushBackTimeTillSpawn();
+                break;
+            //SPAWN VERTICAL SHOCKWAVE
+            case 1:
+                spawnShockwaveVertical();
+                pushBackTimeTillSpawn();
+                break;
+        }
     }
 
     private void thirdStageAttack()

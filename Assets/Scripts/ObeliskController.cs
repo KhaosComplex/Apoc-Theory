@@ -27,8 +27,9 @@ public class ObeliskController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Time.timeSinceLevelLoad>= timeToMove) {
-            switch(direction)
+        if (Time.timeSinceLevelLoad >= timeToMove)
+        {
+            switch (direction)
             {
                 //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD
                 case Directions.forward:
@@ -46,7 +47,7 @@ public class ObeliskController : MonoBehaviour {
             }
 
             boxCollider.isTrigger = true;
-        }
+        } 
 	}
 
     public Directions getDirection()
@@ -61,7 +62,18 @@ public class ObeliskController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (Time.timeSinceLevelLoad >= timeToMove)
+        //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            playerObject.GetComponent<PlayerController>().takeDamage(damage);
+            Destroy(this.gameObject);
+        }
+    }
+
+    /*void OnCollisionEnter(Collision other)
+    {
+        //ONLY HURT THE PLAYER ONCE THE OBELISK IS MOVING
+        if ((timeToMove-Time.timeSinceLevelLoad) >= (timeToWait-.02))
         {
             //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
             if (other.gameObject.tag.Equals("Player"))
@@ -70,6 +82,6 @@ public class ObeliskController : MonoBehaviour {
                 Destroy(this.gameObject);
             }
         }
-    }
+    }*/
 
 }

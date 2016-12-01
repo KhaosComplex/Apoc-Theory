@@ -55,6 +55,7 @@ public class BossController : MonoBehaviour
         switch (currentStage)
         {
             case Stages.first:
+
                 break;
             case Stages.second:
 
@@ -100,6 +101,8 @@ public class BossController : MonoBehaviour
         currentStage = Stages.second;
 
         bossObeliskController.setCurrentStage(currentStage);
+        bossObeliskHoneInController.setCurrentStage(currentStage);
+        bossShockwaveController.setCurrentStage(currentStage);
     }
 
     private void thirdStage()
