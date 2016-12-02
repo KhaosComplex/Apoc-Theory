@@ -61,4 +61,14 @@ public class PlayerShooter : MonoBehaviour
         else
             gameObject.GetComponent<MeshRenderer>().enabled = true;
     }
+
+    public bool getController()
+    {
+        return controller;
+    }
+
+    public void setController(bool controllerBool)
+    {
+        controller = controllerBool;
+    }
 }

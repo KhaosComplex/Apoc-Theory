@@ -95,8 +95,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        RaycastHit hit;
+     
         //AS LONG AS PLAYER IS IN THE AIR CONSTANTLY CHECK TO SEE IF HE HAS GROUNDED
-        isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f))
+        {
+            if (hit.collider.CompareTag("ClickCollider"))
+                isGrounded = false;
+            else
+                isGrounded = true;
+        }
 
         //IF PLAYER IS ON THE GROUND
         if (isGrounded)
@@ -177,6 +185,11 @@ public class PlayerController : MonoBehaviour
             hitStun = true;
             movementSpeed = movementSpeed / hitStunMult;
         }
+    }
+
+    public void killPlayer()
+    {
+        HP = 0;
     }
 
     public bool isInMelee()

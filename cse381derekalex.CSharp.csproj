@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\BossShooter.cs" />
     <Compile Include="Assets\Scripts\BossShotController.cs" />
     <Compile Include="Assets\Scripts\BossSpikeController.cs" />
+    <Compile Include="Assets\Scripts\BoundaryKillPlayer.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtBoss.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtOrigin.cs" />
     <Compile Include="Assets\Scripts\CameraLookAtPlayer.cs" />

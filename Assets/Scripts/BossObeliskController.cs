@@ -26,7 +26,6 @@ public class BossObeliskController : MonoBehaviour
     {
         autoReshufflePatterns(mainStagePatterns);
 
-
         bool immune = GetComponent<BossObeliskBossShotController>().isImmune();
 
         //ONLY IF OUR BOSS ISN'T IN THE IMMUNE STATE, DO WE USE THE OBELISK ATTACKS
