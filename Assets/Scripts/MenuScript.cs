@@ -16,6 +16,11 @@ public class MenuScript : MonoBehaviour {
     void Start () {
         quitMenu.enabled = false;
         playerShooter = playerGun.GetComponent<PlayerShooter>();
+
+        if (playerShooter.getController())
+            controllerText.GetComponentInChildren<Text>().color = Color.green;
+        else
+            controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);
     }
 	
 	public void QuitPress()
