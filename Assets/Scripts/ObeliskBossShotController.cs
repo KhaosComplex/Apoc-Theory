@@ -2,15 +2,24 @@
 using System.Collections;
 
 public class ObeliskBossShotController : MonoBehaviour {
-
+    [SerializeField] private Transform container;
+    [SerializeField] private Transform end;
+    [SerializeField] private float speedToRise;
     [SerializeField] private float HP;
 
     void Update()
     {
-        if (HP <= 0)
+        if (container.position.y >= end.position.y)
         {
-            Destroy(this.gameObject);
-        } 
+            if (HP <= 0)
+            {
+                Destroy(transform.parent.parent.gameObject);
+            }
+        }
+        else
+        {
+            container.transform.position = Vector3.MoveTowards(container.transform.position, end.position, speedToRise * Time.deltaTime);
+        }
     }
 
     public float getHP()
@@ -25,7 +34,8 @@ public class ObeliskBossShotController : MonoBehaviour {
 
     public void takeDamage(float damage)
     {
-        HP = HP - damage;
+        if (container.position.y == end.position.y)
+            HP = HP - damage;
     }
 
 }

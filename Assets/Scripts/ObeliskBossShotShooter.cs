@@ -6,6 +6,10 @@ public class ObeliskBossShotShooter : MonoBehaviour
     [SerializeField]
     private Transform controller;
     [SerializeField]
+    private Transform parentContainerTransform;
+    [SerializeField]
+    private Transform endTransform;
+    [SerializeField]
     private float speed;
     [SerializeField]
     private GameObject shot;
@@ -17,18 +21,23 @@ public class ObeliskBossShotShooter : MonoBehaviour
     [SerializeField]
     private bool movingRight;
 
+    private bool canFire;
+
     void Update()
     {
-        Quaternion nextRotation = controller.rotation;
-        nextRotation *= Quaternion.Euler(0, 10, 0);
-        controller.rotation = Quaternion.RotateTowards(controller.rotation, nextRotation, Time.deltaTime * speed);
-
-        //NOW MAKE SURE THE GUN FIRES CONSISTENT WITH THE FIRE RATE
-        if (Time.timeSinceLevelLoad > nextFire)
+        if (parentContainerTransform.position.y == endTransform.position.y)
         {
-            nextFire = Time.timeSinceLevelLoad + fireRate;
-            GameObject shotHolder = (GameObject)Instantiate(shot, controller.position, controller.rotation);
-            shotHolder.transform.parent = GameObject.Find("Boss Shots").transform;
+            Quaternion nextRotation = controller.rotation;
+            nextRotation *= Quaternion.Euler(0, 10, 0);
+            controller.rotation = Quaternion.RotateTowards(controller.rotation, nextRotation, Time.deltaTime * speed);
+
+            //NOW MAKE SURE THE GUN FIRES CONSISTENT WITH THE FIRE RATE
+            if (Time.timeSinceLevelLoad > nextFire)
+            {
+                nextFire = Time.timeSinceLevelLoad + fireRate;
+                GameObject shotHolder = (GameObject)Instantiate(shot, controller.position, controller.rotation);
+                shotHolder.transform.parent = GameObject.Find("Boss Shots").transform;
+            }
         }
     }
 }

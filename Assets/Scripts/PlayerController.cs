@@ -66,13 +66,13 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.TransformDirection(moveDirection);
 
         //ROTATE THE PLAYER MODEL IN THE DIRECTION THE PLAYER IS MOVING
-        if(horizontalMovement != 0 || verticalMovement != 0)
+        if (horizontalMovement != 0 || verticalMovement != 0)
             childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
 
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Time.timeSinceLevelLoad > nextDash)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetMouseButtonDown(1))
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButton("Fire2") || Input.GetAxis("Dash") != 0)
             {
                 // GET THE CHANGE IN DISTANCE REQUIRED TO DASH (AKA DIRECTION)
                 float deltaX = horizontalMovement;
@@ -95,21 +95,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //AS LONG AS PLAYER IS IN THE AIR CONSTANTLY CHECK TO SEE IF HE HAS GROUNDED
+        isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+
         //IF PLAYER IS ON THE GROUND
         if (isGrounded)
         {
             //AND SPACE IS PRESSED
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetAxis("Jump") != 0)
             {
                 gravityRate = jumpSpeed;
                 moveDirection.y = gravityRate;
                 isGrounded = false;
             }
-        }
-        //AS LONG AS PLAYER IS IN THE AIR CONSTANTLY CHECK TO SEE IF HE HAS GROUNDED
-        else
-        {
-            isGrounded = Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
         }
 
         //MOVE THE PLAYER

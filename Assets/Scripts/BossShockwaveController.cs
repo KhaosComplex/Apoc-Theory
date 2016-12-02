@@ -6,9 +6,11 @@ public class BossShockwaveController : MonoBehaviour
     [SerializeField] private GameObject shockwave;
     [SerializeField] private GameObject shockwaveUP;
     [SerializeField] private float timeToSpawnShockwave;
-    [SerializeField] private float timeBetweenShockwaveSpawn;
+    [SerializeField] private float fourthStageTimeBetweenShockwaveSpawn;
+    [SerializeField] private float fifthStageTimeBetweenShockwaveSpawn;
+    private float timeBetweenShockwaveSpawn;
 
-    private BossController.Stages currentStage;
+    private int currentStage;
 
     void Update()
     {
@@ -16,28 +18,46 @@ public class BossShockwaveController : MonoBehaviour
         {
             switch (currentStage)
             {
-                case BossController.Stages.first:
-                    firstStageAttack();
+                case 4:
+                    fourthStageAttack();
                     break;
-                case BossController.Stages.second:
-                    secondStageAttack();
+                case 5:
+                    fifthAndSixthStageAttack();
                     break;
-                case BossController.Stages.third:
-                    thirdStageAttack();
+                case 6:
+                    fifthAndSixthStageAttack();
                     break;
             }
         }
     }
 
-    private void firstStageAttack()
+    private void fourthStageAttack()
     {
         //SPAWN HORIZONTAL SHOCKWAVE
         spawnShockwaveHorizontal();
         pushBackTimeTillSpawn();
     }
 
-    private void secondStageAttack()
+    /*private void hardStageAttack()
     {
+        switch (Random.Range(0, 2))
+        {
+            //SPAWN HORIZONTAL SHOCKWAVE
+            case 0:
+                spawnShockwaveHorizontal();
+                pushBackTimeTillSpawn();
+                break;
+            //SPAWN VERTICAL SHOCKWAVE
+            case 1:
+                spawnShockwaveVertical();
+                pushBackTimeTillSpawn();
+                break;
+        }
+    }*/
+
+    private void fifthAndSixthStageAttack()
+    {
+        //PICK ONE OF THE 3 SHOCKWAVES TO SPAWN
         switch (Random.Range(0, 2))
         {
             //SPAWN HORIZONTAL SHOCKWAVE
@@ -53,38 +73,24 @@ public class BossShockwaveController : MonoBehaviour
         }
     }
 
-    private void thirdStageAttack()
+    public void setCurrentStage(int stage)
     {
-        //PICK ONE OF THE 3 SHOCKWAVES TO SPAWN
-        switch (Random.Range(0, 3))
+        currentStage = stage;
+
+        switch (currentStage)
         {
-            //SPAWN HORIZONTAL SHOCKWAVE
-            case 0:
-                spawnShockwaveHorizontal();
-                pushBackTimeTillSpawn();
+            case 4:
+                timeBetweenShockwaveSpawn = fourthStageTimeBetweenShockwaveSpawn;
                 break;
-            //SPAWN VERTICAL SHOCKWAVE
-            case 1:
-                spawnShockwaveVertical();
-                pushBackTimeTillSpawn();
-                break;
-            //SPAWN BOTH
-            case 2:
-                spawnShockwaveHorizontal();
-                spawnShockwaveVertical();
-                pushBackTimeTillSpawn();
+            case 5:
+                timeBetweenShockwaveSpawn = fifthStageTimeBetweenShockwaveSpawn;
                 break;
         }
     }
 
-    public void setCurrentStage(BossController.Stages stage)
-    {
-        currentStage = stage;
-    }
-
     private void spawnShockwaveHorizontal()
     {
-        Instantiate(shockwave, transform.TransformPoint(0, -.35f, -.96f), shockwave.transform.rotation);
+        Instantiate (shockwave, transform.TransformPoint(0, -.35f, -.96f), shockwave.transform.rotation);
     }
 
     private void spawnShockwaveVertical()

@@ -16,6 +16,8 @@ public class BossShooter : MonoBehaviour
 
     [SerializeField] private bool movingRight;
 
+    private int currentStage;
+
     void Update()
     {
         if (Time.timeSinceLevelLoad >= timeToStart)
@@ -39,6 +41,24 @@ public class BossShooter : MonoBehaviour
                 GameObject shotHolder = (GameObject)Instantiate(shot, controller.position, controller.rotation);
                 shotHolder.transform.parent = GameObject.Find("Boss Shots").transform;
             }
+        }
+    }
+
+    void thirdStage()
+    {
+        speed = 300f;
+        fireRate = .05f;
+    }
+
+    public void setCurrentStage(int stage)
+    {
+        currentStage = stage;
+
+        switch(currentStage)
+        {
+            case 3:
+                thirdStage();
+                break;
         }
     }
 }

@@ -3,9 +3,11 @@ using System.Collections;
 
 public class ObeliskHoneInController : MonoBehaviour
 {
-
+    [SerializeField] private Transform model;
+    [SerializeField] private Transform end;
     [SerializeField] private float timeToWait;
     [SerializeField] private float speed;
+    [SerializeField] private float speedToRise;
     [SerializeField] private float damage;
 
     private float timeToMove;
@@ -27,17 +29,31 @@ public class ObeliskHoneInController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeSinceLevelLoad >= timeToMove)
+        if (model.position.y == end.position.y)
         {
-            if (!foundTarget)
+            if (Time.timeSinceLevelLoad >= timeToMove)
+            {
+                if (!foundTarget)
+                {
+                    transform.LookAt(new Vector3(playerObject.transform.position.x, transform.position.y, playerObject.transform.position.z));
+                    foundTarget = true;
+                    boxCollider.isTrigger = true;
+                }
+            
+                rb.velocity = transform.forward * speed;
+                rb.isKinematic = false;
+            }
+            else
             {
                 transform.LookAt(new Vector3(playerObject.transform.position.x, transform.position.y, playerObject.transform.position.z));
-                foundTarget = true;
-                boxCollider.isTrigger = true;
             }
-            
-            rb.velocity = transform.forward * speed;
         }
+        else
+        {
+            transform.position = Vector3.MoveTowards(model.transform.position, end.position, speedToRise * Time.deltaTime);
+            timeToMove = Time.timeSinceLevelLoad + timeToWait;
+        }
+
     }
 
     void OnTriggerEnter(Collider other)

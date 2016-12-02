@@ -8,16 +8,18 @@ public class BossController : MonoBehaviour
     private float HP;
     [SerializeField]
     private Attack attack;
+    [SerializeField] private float hpPerStage;
     private bool immune;
 
     private float maxHP;
     private bool meleeMode = false;
 
-    public enum Stages { first, second, third };
-    private Stages currentStage;
+    private int currentStage;
+    private float healthLost;
 
     private Component[] bossBurstShooters;
     private Component[] bossLRShooters;
+    private BossSpikeController bossSpikeController;
     private BossObeliskController bossObeliskController;
     private BossObeliskBossShotController bossObeliskBossShotController;
     private BossObeliskHoneInController bossObeliskHoneInController;
@@ -30,6 +32,7 @@ public class BossController : MonoBehaviour
         maxHP = HP;
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
+        bossSpikeController = GetComponent<BossSpikeController>();
         bossObeliskController = GetComponent<BossObeliskController>();
         bossObeliskHoneInController = GetComponent<BossObeliskHoneInController>();
         bossObeliskBossShotController = GetComponent<BossObeliskBossShotController>();
@@ -41,31 +44,41 @@ public class BossController : MonoBehaviour
 
     void Update()
     {
-        if (currentStage != Stages.second && HP > maxHP / 3 && HP <= maxHP * 2 / 3)
+        if (healthLost >= hpPerStage)
         {
-            currentStage = Stages.second;
-            secondStage();
-        }
-        else if (currentStage != Stages.third && HP <= maxHP / 3)
-        {
-            currentStage = Stages.third;
-            thirdStage();
+            healthLost = healthLost % hpPerStage;
+            switch(currentStage)
+            {
+                case 1:
+                    secondStage();
+                    break;
+                case 2:
+                    thirdStage();
+                    break;
+                case 3:
+                    fourthStage();
+                    break;
+                case 4:
+                    fifthStage();
+                    break;
+                case 5:
+                    sixthStage();
+                    break;
+            }
         }
 
         switch (currentStage)
         {
-            case Stages.first:
+            case 0:
 
                 break;
-            case Stages.second:
+            case 1:
 
                 break;
-            case Stages.third:
-
+            case 6:
                 immune = (GetComponent<BossObeliskBossShotController>().isImmune());
 
-                Component[] bossShooters = GetComponentsInChildren<BossBurstShooter>();
-                foreach (BossBurstShooter bossShooterScript in bossShooters)
+                foreach (BossShooter bossShooterScript in bossLRShooters)
                 {
                     if (immune)
                         bossShooterScript.enabled = false;
@@ -79,38 +92,83 @@ public class BossController : MonoBehaviour
 
     private void firstStage()
     {
-        currentStage = Stages.first;
+        currentStage = 1;
 
         foreach (BossBurstShooter bossShooterScript in bossBurstShooters)
         {
             bossShooterScript.enabled = true;
         }
 
-        bossObeliskController.setCurrentStage(currentStage);
-        bossObeliskController.enabled = true;
+        /*foreach (BossShooter bossShooterScript in bossLRShooters)
+        {
+            bossShooterScript.enabled = true;
+        }*/
 
-        bossObeliskHoneInController.setCurrentStage(currentStage);
-        bossObeliskHoneInController.enabled = true;
-
-        bossShockwaveController.setCurrentStage(currentStage);
-        bossShockwaveController.enabled = true;
     }
 
     private void secondStage()
     {
-        currentStage = Stages.second;
+        currentStage = 2;
 
-        bossObeliskController.setCurrentStage(currentStage);
-        bossObeliskHoneInController.setCurrentStage(currentStage);
-        bossShockwaveController.setCurrentStage(currentStage);
+        bossSpikeController.setCurrentStage(currentStage);
+        bossSpikeController.enabled = true;
     }
 
     private void thirdStage()
     {
-        currentStage = Stages.third;
+        currentStage = 3;
+
+        foreach (BossBurstShooter bossShooterScript in bossBurstShooters)
+        {
+            bossShooterScript.enabled = false;
+        }
+
+        foreach (BossShooter bossShooterScript in bossLRShooters)
+        {
+            bossShooterScript.enabled = true;
+        }
+
+        bossSpikeController.setCurrentStage(currentStage);
+
+        bossObeliskController.setCurrentStage(currentStage);
+        bossObeliskController.enabled = true;
+
+    }
+
+    private void fourthStage()
+    {
+        currentStage = 4;
 
         bossObeliskController.setCurrentStage(currentStage);
         bossShockwaveController.setCurrentStage(currentStage);
+        bossSpikeController.setCurrentStage(currentStage);
+
+        bossShockwaveController.setCurrentStage(currentStage);
+        bossShockwaveController.enabled = true;
+
+    }
+
+    private void fifthStage()
+    {
+        currentStage = 5;
+
+        bossObeliskController.enabled = false;
+
+        bossShockwaveController.setCurrentStage(currentStage);
+
+        bossObeliskHoneInController.setCurrentStage(currentStage);
+        bossObeliskHoneInController.enabled = true;
+    }
+
+    private void sixthStage()
+    {
+        currentStage = 6;
+
+        bossShockwaveController.setCurrentStage(currentStage);
+        bossObeliskHoneInController.setCurrentStage(currentStage);
+
+        bossObeliskBossShotController.setCurrentStage(currentStage);
+        bossObeliskBossShotController.enabled = true;
     }
 
     class Attack
@@ -144,6 +202,7 @@ public class BossController : MonoBehaviour
     public void takeDamage(float damage)
     {
         HP = HP - damage;
+        healthLost += damage;
     }
 
     public bool isImmune()

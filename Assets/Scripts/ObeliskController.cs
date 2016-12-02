@@ -3,8 +3,11 @@ using System.Collections;
 
 public class ObeliskController : MonoBehaviour {
 
+    [SerializeField] private Transform model;
+    [SerializeField] private Transform end;
     [SerializeField] private float timeToWait;
     [SerializeField] private float speed;
+    [SerializeField] private float speedToRise;
     [SerializeField] private float damage;
 
     private Directions direction;
@@ -27,28 +30,37 @@ public class ObeliskController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Time.timeSinceLevelLoad >= timeToMove)
+        if (model.position.y == end.position.y)
         {
-            switch (direction)
+            if (Time.timeSinceLevelLoad >= timeToMove)
             {
-                //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD
-                case Directions.forward:
-                    rb.velocity = transform.forward * speed;
-                    break;
-                case Directions.backward:
-                    rb.velocity = -transform.forward * speed;
-                    break;
-                case Directions.right:
-                    rb.velocity = transform.right * speed;
-                    break;
-                case Directions.left:
-                    rb.velocity = -transform.right * speed;
-                    break;
-            }
+                switch (direction)
+                {
+                    //WHEN PROJECTILE IS SPAWNED, SEND IT FORWARD
+                    case Directions.forward:
+                        rb.velocity = transform.forward * speed;
+                        break;
+                    case Directions.backward:
+                        rb.velocity = -transform.forward * speed;
+                        break;
+                    case Directions.right:
+                        rb.velocity = transform.right * speed;
+                        break;
+                    case Directions.left:
+                        rb.velocity = -transform.right * speed;
+                        break;
+                }
 
-            boxCollider.isTrigger = true;
-        } 
-	}
+                boxCollider.isTrigger = true;
+                rb.isKinematic = false;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(model.transform.position, end.position, speedToRise * Time.deltaTime);
+            timeToMove = Time.timeSinceLevelLoad + timeToWait;
+        }
+    }
 
     public Directions getDirection()
     {
@@ -69,19 +81,5 @@ public class ObeliskController : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-
-    /*void OnCollisionEnter(Collision other)
-    {
-        //ONLY HURT THE PLAYER ONCE THE OBELISK IS MOVING
-        if ((timeToMove-Time.timeSinceLevelLoad) >= (timeToWait-.02))
-        {
-            //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
-            if (other.gameObject.tag.Equals("Player"))
-            {
-                playerObject.GetComponent<PlayerController>().takeDamage(damage);
-                Destroy(this.gameObject);
-            }
-        }
-    }*/
 
 }
