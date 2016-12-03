@@ -15,6 +15,7 @@ public class PlayerShooter : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(controller);
         if (controller)
         {
             GetComponent<AimAtMouse>().enabled = false;
