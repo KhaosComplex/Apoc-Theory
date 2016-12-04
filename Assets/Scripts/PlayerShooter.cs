@@ -11,11 +11,18 @@ public class PlayerShooter : MonoBehaviour
     private float nextFire;
     private bool inMeleeRange = false;
 
-    [SerializeField] private bool controller;
+    private string PLAYER_SETTINGS_FILE;
+    private bool controller;
+
 
     void Start()
     {
-        Debug.Log(controller);
+        //GET CONTROLLER SETTINGS FROM THE SETTINGS FILE AND SET THEM TO THE GUN
+        PlayerSettingsFileReader playerSettingsFileReader = GetComponentInParent<PlayerSettingsFileReader>();
+        PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
+        playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
+        controller = playerSettingsFileReader.getController();
+
         if (controller)
         {
             GetComponent<AimAtMouse>().enabled = false;

@@ -9,15 +9,19 @@ public class MenuScript : MonoBehaviour {
     [SerializeField] private Button startText;
     [SerializeField] private Button quitText;
     [SerializeField] private Button controllerText;
-    [SerializeField] private GameObject playerGun;
-    private PlayerShooter playerShooter;
+    [SerializeField] private GameObject playerObject;
+    private PlayerSettingsFileReader playerSettingsFileReader;
+
+    private string PLAYER_SETTINGS_FILE;
 
     // Use this for initialization
     void Start () {
         quitMenu.enabled = false;
-        playerShooter = playerGun.GetComponent<PlayerShooter>();
+        PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
+        playerSettingsFileReader = playerObject.GetComponent<PlayerSettingsFileReader>();
+        playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
 
-        if (playerShooter.getController())
+        if (playerSettingsFileReader.getController())
             controllerText.GetComponentInChildren<Text>().color = Color.green;
         else
             controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);
@@ -46,9 +50,9 @@ public class MenuScript : MonoBehaviour {
 
     public void Controller()
     {
-        playerShooter.setController(!playerShooter.getController());
+        playerSettingsFileReader.setController(PLAYER_SETTINGS_FILE, !playerSettingsFileReader.getController());
 
-        if (playerShooter.getController())
+        if (playerSettingsFileReader.getController())
             controllerText.GetComponentInChildren<Text>().color = Color.green;
         else
             controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);

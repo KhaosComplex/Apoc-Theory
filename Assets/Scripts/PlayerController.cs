@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool hitStun;
     private bool isGrounded;
     private float distToGround;
-    private CharacterController controller;
+    private CharacterController characterController;
     private float hitStunTime;
     private float nextDash;
     private Vector3 playerPoint;
@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         maxHP = HP;
-        controller = GetComponent<CharacterController>();
-        controller.detectCollisions = false;
+        characterController = GetComponent<CharacterController>();
+        characterController.detectCollisions = false;
         distToGround = GetComponent<Collider>().bounds.extents.y;
         hitStunTime = hitStunDuration;
         bossObject = GameObject.FindWithTag("Boss");
@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         if (hitStun)
         {
             hitStunTime -= Time.deltaTime;
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //MOVE THE PLAYER
-        controller.Move(moveDirection * Time.deltaTime);
+        characterController.Move(moveDirection * Time.deltaTime);
 
         //MELEE DISTANCE CALCULATIONS
         playerPoint = gameObject.GetComponent<Collider>().ClosestPointOnBounds(bossObject.transform.position);
@@ -159,7 +160,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 gravityVector = new Vector3(0, gravityRate, 0);
 
-        controller.Move(gravityVector * Time.deltaTime);
+        characterController.Move(gravityVector * Time.deltaTime);
     }
 
     public float getHP()
@@ -196,4 +197,5 @@ public class PlayerController : MonoBehaviour
     {
         return inMelee;
     }
+
 }

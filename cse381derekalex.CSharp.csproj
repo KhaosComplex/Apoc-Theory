@@ -95,12 +95,16 @@
     <Compile Include="Assets\Scripts\ObeliskController.cs" />
     <Compile Include="Assets\Scripts\ObeliskHoneInController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerSettingsFileReader.cs" />
     <Compile Include="Assets\Scripts\PlayerShooter.cs" />
     <Compile Include="Assets\Scripts\PlayerShotController.cs" />
     <Compile Include="Assets\Scripts\ShockController.cs" />
     <Compile Include="Assets\Scripts\SlamController.cs" />
     <Compile Include="Assets\Scripts\SpikeController.cs" />
     <Compile Include="Assets\Scripts\SwipeController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Settings\PlayerSettings.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
