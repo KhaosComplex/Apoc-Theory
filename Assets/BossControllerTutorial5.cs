@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossControllerLevel1 : BossController
+public class BossControllerTutorial5 : BossController
 {
-    [SerializeField] private float hpPerStage;
+    [SerializeField]
+    private float hpPerStage;
 
     private bool meleeMode = false;
 
@@ -11,12 +12,16 @@ public class BossControllerLevel1 : BossController
 
     private Component[] bossBurstShooters;
     private Component[] bossLRShooters;
+    private BossObeliskBossShotController bossObeliskBossShotController;
+    private BossShockwaveController bossShockwaveController;
 
     void Start()
     {
         maxHP = HP;
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
+        bossObeliskBossShotController = GetComponent<BossObeliskBossShotController>();
+        bossShockwaveController = GetComponent<BossShockwaveController>();
 
         firstStage();
 
@@ -37,11 +42,19 @@ public class BossControllerLevel1 : BossController
 
         switch (currentStage)
         {
-            case 0:
-
-                break;
             case 1:
 
+                break;
+            case 2:
+                immune = (GetComponent<BossObeliskBossShotController>().isImmune());
+
+                foreach (BossShooter bossShooterScript in bossLRShooters)
+                {
+                    if (immune)
+                        bossShooterScript.enabled = false;
+                    else
+                        bossShooterScript.enabled = true;
+                }
                 break;
         }
 
@@ -50,6 +63,9 @@ public class BossControllerLevel1 : BossController
     private void firstStage()
     {
         currentStage = 1;
+
+        bossShockwaveController.setCurrentStage(4);
+        bossShockwaveController.enabled = true;
 
         foreach (BossBurstShooter bossShooterScript in bossBurstShooters)
         {
@@ -66,6 +82,9 @@ public class BossControllerLevel1 : BossController
     private void secondStage()
     {
         currentStage = 2;
+
+        bossObeliskBossShotController.setCurrentStage(6);
+        bossObeliskBossShotController.enabled = true;
 
         foreach (BossBurstShooter bossShooterScript in bossBurstShooters)
         {
