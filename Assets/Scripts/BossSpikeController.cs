@@ -9,6 +9,8 @@ public class BossSpikeController : MonoBehaviour
     private float timeToSpawnSpike;
     [SerializeField]
     private float timeBetweenSpikeSpawn;
+    [SerializeField]
+    private float timeToWaitBeforeFirstSpike;
     private GameObject playerObject;
 
     private int currentStage;
@@ -16,26 +18,30 @@ public class BossSpikeController : MonoBehaviour
     void Start()
     {
         playerObject = GameObject.FindWithTag("Player");
+        timeToWaitBeforeFirstSpike = Time.timeSinceLevelLoad + timeToWaitBeforeFirstSpike;
     }
 
     void Update()
     {
-        if (Time.timeSinceLevelLoad >= timeToSpawnSpike)
+        if (Time.timeSinceLevelLoad >= timeToWaitBeforeFirstSpike)
         {
-            switch (currentStage)
+            if (Time.timeSinceLevelLoad >= timeToSpawnSpike)
             {
-                case 2:
-                    mainStageAttack();
-                    pushBackTimeTillSpawn();
-                    break;
-                case 3:
-                    mainStageAttack();
-                    pushBackTimeTillSpawn();
-                    break;
-                case 6:
-                    mainStageAttack();
-                    pushBackTimeTillSpawn();
-                    break;
+                switch (currentStage)
+                {
+                    case 2:
+                        mainStageAttack();
+                        pushBackTimeTillSpawn();
+                        break;
+                    case 3:
+                        mainStageAttack();
+                        pushBackTimeTillSpawn();
+                        break;
+                    case 6:
+                        mainStageAttack();
+                        pushBackTimeTillSpawn();
+                        break;
+                }
             }
         }
     }

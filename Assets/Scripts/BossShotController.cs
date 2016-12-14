@@ -28,4 +28,14 @@ public class BossShotController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public float getSpeed()
+    {
+        return speed;
+    }
+
+    public void setSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
 }

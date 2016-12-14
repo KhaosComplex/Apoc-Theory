@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BossControllerLevel1 : BossController
+public class BossControllerLevel2 : BossController
 {
-    [SerializeField] private float hpPerStage;
+    [SerializeField]
+    private float hpPerStage;
 
     private bool meleeMode = false;
 
@@ -11,12 +12,14 @@ public class BossControllerLevel1 : BossController
 
     private Component[] bossBurstShooters;
     private Component[] bossLRShooters;
+    private BossSpikeController bossSpikeController;
 
     void Start()
     {
         maxHP = HP;
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
+        bossSpikeController = GetComponent<BossSpikeController>();
 
         firstStage();
 
@@ -50,6 +53,8 @@ public class BossControllerLevel1 : BossController
     private void firstStage()
     {
         currentStage = 1;
+        bossSpikeController.setCurrentStage(2);
+        bossSpikeController.enabled = true;
 
         foreach (BossBurstShooter bossShooterScript in bossBurstShooters)
         {
