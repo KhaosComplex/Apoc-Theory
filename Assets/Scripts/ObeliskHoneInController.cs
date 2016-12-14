@@ -39,9 +39,8 @@ public class ObeliskHoneInController : MonoBehaviour
                     foundTarget = true;
                     boxCollider.isTrigger = true;
                 }
-            
+                rb.constraints = RigidbodyConstraints.None;
                 rb.velocity = transform.forward * speed;
-                rb.isKinematic = false;
             }
             else
             {
@@ -72,15 +71,19 @@ public class ObeliskHoneInController : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        //ONLY HURT THE PLAYER ONCE THE OBELISK IS MOVING
-        if ((timeToMove - Time.timeSinceLevelLoad) >= (timeToWait - .02))
+        // force is how forcefully we will push the player away from the enemy.
+        float force = 20;
+
+        // If the object we hit is the enemy
+        if (other.gameObject.tag.Equals("Player"))
         {
-            //IF PLAYER GETS HIT, HAVE PLAYER LOSE HEALTH
-            if (other.gameObject.tag.Equals("Player"))
-            {
-                playerObject.GetComponent<PlayerController>().takeDamage(damage);
-                Destroy(this.gameObject);
-            }
+            // Calculate Angle Between the collision point and the player
+            Vector3 dir = other.contacts[0].point - transform.position;
+            // We then get the opposite (-Vector3) and normalize it
+            dir = -dir.normalized;
+            // And finally we add force in the direction of dir and multiply it by force. 
+            // This will push back the player
+            other.gameObject.GetComponent<CharacterController>().Move(dir * force);
         }
     }
 

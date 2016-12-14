@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpSpeed;
     [SerializeField] private float dashDistance;
     [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashImmunity;
     [SerializeField] private float HP;
     [SerializeField] private float gravity;
     [SerializeField] private float hitStunDuration;
@@ -16,6 +17,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float meleeSwitchRange;
     [SerializeField] private float meleeRate;
     [SerializeField] private float meleeDamage;
+    //[SerializeField] private float xPositionConstraintPositive;
+    //[SerializeField] private float xPositionConstraintNegative;
+    //[SerializeField] private float yPositionConstraintPositive;
+    //[SerializeField] private float yPositionConstraintNegative;
+    [SerializeField] private float zPositionConstraintPositive;
+    //[SerializeField] private float zPositionConstraintNegative;
     private float gravityRate = 1f;
 
     private float maxHP;
@@ -32,6 +39,8 @@ public class PlayerController : MonoBehaviour
     private float nextMelee = 0.5f;
     private GameObject bossObject;
     private GameObject meleeBoxObject;
+    private bool dashImmune;
+    private float endDashImmune;
 
     void Start()
     {
@@ -46,7 +55,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
         if (hitStun)
         {
             hitStunTime -= Time.deltaTime;
@@ -57,6 +65,13 @@ public class PlayerController : MonoBehaviour
                 movementSpeed = movementSpeed * hitStunMult;
             }
         }
+
+        //MAKE SURE TO CHECK AND SEE IF THE PLAYER SHOULD NO LONGER BE IMMUNE
+        if (Time.timeSinceLevelLoad >= endDashImmune)
+        {
+            dashImmune = false;
+        }
+
         //GET THE CHARACTER CONTROLLER AND DIRECTION OF MOVEMENT IN RELATION TO SPEED
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
@@ -70,6 +85,7 @@ public class PlayerController : MonoBehaviour
         if (horizontalMovement != 0 || verticalMovement != 0)
             childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
 
+        RaycastHit hit;
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Time.timeSinceLevelLoad > nextDash)
         {
@@ -87,17 +103,33 @@ public class PlayerController : MonoBehaviour
                     //FIGURE OUT THE APPROPIATE RATE TO APPLY TO DELTAX/Y TO TRAVEL THE DASH DISTANCE IN THE PROPER DIRECTION
                     float rate = dashDistance / hyp;
 
-                    //FINALLY, SET THE POSITION
-                    transform.position = new Vector3(transform.position.x + (deltaX * rate), transform.position.y, transform.position.z + (deltaZ * rate));
+                    //DECLARE THE NEW POSITION
+                    Vector3 newPosition = new Vector3(transform.position.x + (deltaX * rate), transform.position.y, transform.position.z + (deltaZ * rate));
 
-                    //LASTLY SET OUR DASH COOLDOWN INTO EFFECT
-                    nextDash = Time.timeSinceLevelLoad + dashCooldown;
+                    //TEST TO MAKE SURE IT'S NOT OUSIDE THE BOUNDARIES
+                    if (Physics.Raycast(newPosition, -Vector3.up, out hit))
+                    {
+                        if (!hit.collider.CompareTag("ClickCollider") && (newPosition.z <= zPositionConstraintPositive))
+                        {
+                            //FINALLY, SET THE POSITION
+                            transform.position = newPosition;
+
+                            //MAKE SURE THE PLAYER IS DMG IMMUNE
+                            dashImmune = true;
+
+                            //SET THE IMMUNITY TIME INTO EFFECT
+                            endDashImmune = Time.timeSinceLevelLoad + dashImmunity;
+
+                            //LASTLY SET OUR DASH COOLDOWN INTO EFFECT
+                            nextDash = Time.timeSinceLevelLoad + dashCooldown;
+                        }
+                            
+                    } 
                 }
             }
         }
 
-        RaycastHit hit;
-     
+        Ray ray = new Ray(transform.position, -Vector3.up);
         //AS LONG AS PLAYER IS IN THE AIR CONSTANTLY CHECK TO SEE IF HE HAS GROUNDED
         if (Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f))
         {
@@ -106,6 +138,8 @@ public class PlayerController : MonoBehaviour
             else
                 isGrounded = true;
         }
+        else
+            isGrounded = false;
 
         //IF PLAYER IS ON THE GROUND
         if (isGrounded)
@@ -150,6 +184,9 @@ public class PlayerController : MonoBehaviour
                     bossObject.GetComponent<BossController>().takeDamage(meleeDamage);
             }
         }
+
+        //checkConstraints();
+
     }
 
     void FixedUpdate()
@@ -180,7 +217,8 @@ public class PlayerController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-        HP = HP - damage;
+        if (!dashImmune)
+            HP = HP - damage;
         if (hitStun == false)
         {
             hitStun = true;
@@ -197,5 +235,33 @@ public class PlayerController : MonoBehaviour
     {
         return inMelee;
     }
+
+    /*private void checkConstraints()
+    {
+        if (transform.position.x > xPositionConstraintPositive)
+        {
+            transform.position = new Vector3(xPositionConstraintPositive, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x < xPositionConstraintNegative)
+        {
+            transform.position = new Vector3(xPositionConstraintNegative, transform.position.y, transform.position.z);
+        }
+        if (transform.position.y > yPositionConstraintPositive)
+        {
+            transform.position = new Vector3(transform.position.x, yPositionConstraintPositive, transform.position.z);
+        }
+        if (transform.position.y < yPositionConstraintNegative)
+        {
+            transform.position = new Vector3(transform.position.x, yPositionConstraintNegative, transform.position.z);
+        }
+        if (transform.position.z > zPositionConstraintPositive)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, zPositionConstraintPositive);
+        }
+        if (transform.position.z < zPositionConstraintNegative)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, zPositionConstraintNegative);
+        }
+    }*/
 
 }
