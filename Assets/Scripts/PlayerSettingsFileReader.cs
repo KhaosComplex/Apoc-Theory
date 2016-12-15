@@ -3,10 +3,13 @@ using System;
 using System.Collections;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
+
 
 public class PlayerSettingsFileReader : MonoBehaviour
 {
     private bool controller;
+    private int currentLevel;
 
     public bool Load(string fileName)
     {
@@ -61,10 +64,15 @@ public class PlayerSettingsFileReader : MonoBehaviour
                     controller = true;
                     break;
             }
+        }
+        else if (line.Contains("CurrentLevel"))
+        {
+            String levelToSet = Regex.Match(line, @"\d+").Value;
+            currentLevel = Int32.Parse(levelToSet);
         }     
     }
 
-    private bool replaceSettingLine(String fileName, String[] lines, bool controllerEnabled)
+    private bool replaceControllerSetting(String fileName, String[] lines, bool controllerEnabled)
     {
         for (int i = 0; i < lines.Length; i++) {
             if (lines[i].Contains("ControllerEnabled"))
@@ -78,9 +86,29 @@ public class PlayerSettingsFileReader : MonoBehaviour
         return false;
     }
 
+    private bool replaceCurrentLevelSetting(String fileName, String[] lines, int levelToSet)
+    {
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i].Contains("CurrentLevel"))
+            {
+                lines[i] = "CurrentLevel = " + levelToSet.ToString();
+                File.WriteAllLines(fileName, lines);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public bool getController()
     {
         return controller;
+    }
+
+    public int getCurrentLevel()
+    {
+        return currentLevel;
     }
 
     public bool setController(String fileName, bool controllerEnabled)
@@ -91,11 +119,33 @@ public class PlayerSettingsFileReader : MonoBehaviour
 
             if (lines.Length != 0)
             {
-               if (replaceSettingLine(fileName, lines, controllerEnabled))
+               if (replaceControllerSetting(fileName, lines, controllerEnabled))
                {
                     controller = controllerEnabled;
                     return true;
                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("{0}\n" + e.Message);
+        }
+        return false;
+    }
+
+    public bool setCurrentLevel(String fileName, int levelToSet)
+    {
+        try
+        {
+            string[] lines = File.ReadAllLines(fileName);
+
+            if (lines.Length != 0)
+            {
+                if (replaceCurrentLevelSetting(fileName, lines, levelToSet))
+                {
+                    currentLevel = levelToSet;
+                    return true;
+                }
             }
         }
         catch (Exception e)

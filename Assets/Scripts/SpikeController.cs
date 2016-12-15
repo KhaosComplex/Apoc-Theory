@@ -46,7 +46,10 @@ public class SpikeController : MonoBehaviour
         //SPIKE UP AS SOON AS ENOUGH TIME HAS PASSED
         if (Time.timeSinceLevelLoad >= timeToMove && !delete)
         {
-            transform.position = Vector3.MoveTowards(model.transform.position, end.position, speed * Time.deltaTime);
+            if (model != null)
+                transform.position = Vector3.MoveTowards(model.transform.position, end.position, speed * Time.deltaTime);
+            else
+                Destroy(this);
         }
     }
 

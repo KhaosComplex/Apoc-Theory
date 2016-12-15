@@ -18,6 +18,11 @@ public class BossBurstShooter : MonoBehaviour
 
     private bool isFiring;
 
+    void Start()
+    {
+        timeToStart = Time.timeSinceLevelLoad + timeToStart;
+    }
+
     void Update()
     {
         if (Time.timeSinceLevelLoad >= timeToStart)

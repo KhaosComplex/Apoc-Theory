@@ -18,6 +18,11 @@ public class BossShooter : MonoBehaviour
 
     private int currentStage;
 
+    void Start()
+    {
+        timeToStart = Time.timeSinceLevelLoad + timeToStart;
+    }
+
     void Update()
     {
         if (Time.timeSinceLevelLoad >= timeToStart)

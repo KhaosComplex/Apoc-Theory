@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float meleeSwitchRange;
     [SerializeField] private float meleeRate;
     [SerializeField] private float meleeDamage;
+    [SerializeField] private GameObject bossObject;
     //[SerializeField] private float xPositionConstraintPositive;
     //[SerializeField] private float xPositionConstraintNegative;
     //[SerializeField] private float yPositionConstraintPositive;
@@ -37,7 +38,6 @@ public class PlayerController : MonoBehaviour
     private float distanceToBoss;
     private bool inMelee = false;
     private float nextMelee = 0.5f;
-    private GameObject bossObject;
     private GameObject meleeBoxObject;
     private bool dashImmune;
     private float endDashImmune;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         characterController.detectCollisions = false;
         distToGround = GetComponent<Collider>().bounds.extents.y;
         hitStunTime = hitStunDuration;
-        bossObject = GameObject.FindWithTag("Boss");
+        //bossObject = GameObject.FindWithTag("Boss");
         meleeBoxObject = GameObject.FindWithTag("MeleeBox");
     }
 
@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour
         if (horizontalMovement != 0 || verticalMovement != 0)
             childPlayerTransform.rotation = Quaternion.LookRotation(moveDirection);
 
-        RaycastHit hit;
         //IF SHIFT KEY OR RIGHT CLICK IS PRESSED
         if (Time.timeSinceLevelLoad > nextDash)
         {
@@ -100,10 +99,11 @@ public class PlayerController : MonoBehaviour
                 {
                     //GET THE HYPOTENUSE OF THE TWO DISTANCES
                     float hyp = Mathf.Pow(Mathf.Pow(deltaX, 2f) + Mathf.Pow(deltaZ, 2f), .5f);
+
                     //FIGURE OUT THE APPROPIATE RATE TO APPLY TO DELTAX/Y TO TRAVEL THE DASH DISTANCE IN THE PROPER DIRECTION
                     float rate = dashDistance / hyp;
 
-                    //FINALLY, SET THE POSITION
+                    //FINALLY, MOVE THE PLAYER AT THAT RATE IN THAT DIRECTION
                     characterController.Move(new Vector3((deltaX * rate), 0, (deltaZ * rate)));
 
                     //MAKE SURE THE PLAYER IS DMG IMMUNE
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Ray ray = new Ray(transform.position, -Vector3.up);
+        RaycastHit hit;
         //AS LONG AS PLAYER IS IN THE AIR CONSTANTLY CHECK TO SEE IF HE HAS GROUNDED
         if (Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround + 0.1f))
         {

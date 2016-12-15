@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\CameraPerspectiveZoom.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
+    <Compile Include="Assets\Scripts\LevelSelect.cs" />
     <Compile Include="Assets\Scripts\MeleeController.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\ObeliskBossShotController.cs" />
