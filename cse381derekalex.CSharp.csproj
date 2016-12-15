@@ -69,7 +69,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BossControllerTutorial5.cs" />
     <Compile Include="Assets\Scripts\AimAtMouse.cs" />
     <Compile Include="Assets\Scripts\BossBurstShooter.cs" />
     <Compile Include="Assets\Scripts\BossController.cs" />
@@ -78,6 +77,7 @@
     <Compile Include="Assets\Scripts\BossControllerTutorial2.cs" />
     <Compile Include="Assets\Scripts\BossControllerTutorial3.cs" />
     <Compile Include="Assets\Scripts\BossControllerTutorial4.cs" />
+    <Compile Include="Assets\Scripts\BossControllerTutorial5.cs" />
     <Compile Include="Assets\Scripts\BossObeliskBossShotController.cs" />
     <Compile Include="Assets\Scripts\BossObeliskController.cs" />
     <Compile Include="Assets\Scripts\BossObeliskHoneInController.cs" />

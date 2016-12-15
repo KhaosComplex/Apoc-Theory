@@ -103,28 +103,17 @@ public class PlayerController : MonoBehaviour
                     //FIGURE OUT THE APPROPIATE RATE TO APPLY TO DELTAX/Y TO TRAVEL THE DASH DISTANCE IN THE PROPER DIRECTION
                     float rate = dashDistance / hyp;
 
-                    //DECLARE THE NEW POSITION
-                    Vector3 newPosition = new Vector3(transform.position.x + (deltaX * rate), transform.position.y, transform.position.z + (deltaZ * rate));
+                    //FINALLY, SET THE POSITION
+                    characterController.Move(new Vector3((deltaX * rate), 0, (deltaZ * rate)));
 
-                    //TEST TO MAKE SURE IT'S NOT OUSIDE THE BOUNDARIES
-                    if (Physics.Raycast(newPosition, -Vector3.up, out hit))
-                    {
-                        if (!hit.collider.CompareTag("ClickCollider") && (newPosition.z <= zPositionConstraintPositive))
-                        {
-                            //FINALLY, SET THE POSITION
-                            transform.position = newPosition;
+                    //MAKE SURE THE PLAYER IS DMG IMMUNE
+                    dashImmune = true;
 
-                            //MAKE SURE THE PLAYER IS DMG IMMUNE
-                            dashImmune = true;
+                    //SET THE IMMUNITY TIME INTO EFFECT
+                    endDashImmune = Time.timeSinceLevelLoad + dashImmunity;
 
-                            //SET THE IMMUNITY TIME INTO EFFECT
-                            endDashImmune = Time.timeSinceLevelLoad + dashImmunity;
-
-                            //LASTLY SET OUR DASH COOLDOWN INTO EFFECT
-                            nextDash = Time.timeSinceLevelLoad + dashCooldown;
-                        }
-                            
-                    } 
+                    //LASTLY SET OUR DASH COOLDOWN INTO EFFECT
+                    nextDash = Time.timeSinceLevelLoad + dashCooldown;            
                 }
             }
         }

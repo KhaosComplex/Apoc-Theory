@@ -81,6 +81,7 @@ public class BossObeliskController : MonoBehaviour
                 break;
             case 4:
                 timeBetweenObeliskSpawn = fourthStageTimeBetweenObeliskSpawns;
+                timeToSpawnObelisk -= fourthStageTimeBetweenObeliskSpawns;
                 break;
         }
     }
