@@ -22,9 +22,14 @@ public class MenuScript : MonoBehaviour {
         playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
 
         if (playerSettingsFileReader.getController())
+        {
             controllerText.GetComponentInChildren<Text>().color = Color.green;
-        else
+            controllerText.GetComponentInChildren<Text>().text = "Controller (ENABLED)";
+        }
+        else {
             controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);
+            controllerText.GetComponentInChildren<Text>().text = "Controller (DISABLED)";
+        }
     }
 	
 	public void QuitPress()
@@ -43,7 +48,7 @@ public class MenuScript : MonoBehaviour {
         controllerText.enabled = true;
     }
 
-    public void StartLevel()
+    public void StartLevelSelect()
     {
         SceneManager.LoadScene(1);
     }
@@ -53,9 +58,15 @@ public class MenuScript : MonoBehaviour {
         playerSettingsFileReader.setController(PLAYER_SETTINGS_FILE, !playerSettingsFileReader.getController());
 
         if (playerSettingsFileReader.getController())
+        {
             controllerText.GetComponentInChildren<Text>().color = Color.green;
-        else
+            controllerText.GetComponentInChildren<Text>().text = "Controller (ENABLED)";
+
+        }
+        else {
             controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);
+            controllerText.GetComponentInChildren<Text>().text = "Controller (DISABLED)";
+        }
     }
 
     public void QuitGame()

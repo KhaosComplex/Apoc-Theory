@@ -90,12 +90,14 @@ public class BossShockwaveController : MonoBehaviour
 
     private void spawnShockwaveHorizontal()
     {
-        Instantiate (shockwave, transform.TransformPoint(0, -.35f, -.96f), shockwave.transform.rotation);
+        GameObject shockInstance = (GameObject)Instantiate (shockwave, transform.TransformPoint(0, -.35f, -.97f), shockwave.transform.rotation);
+        shockInstance.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void spawnShockwaveVertical()
     {
-        Instantiate(shockwaveUP, transform.TransformPoint(0, -.35f, -.96f), shockwaveUP.transform.rotation);
+        GameObject shockInstance = (GameObject)Instantiate(shockwaveUP, transform.TransformPoint(0, -.35f, -.97f), shockwaveUP.transform.rotation);
+        shockInstance.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void pushBackTimeTillSpawn()

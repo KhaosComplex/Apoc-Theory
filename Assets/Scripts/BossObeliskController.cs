@@ -91,12 +91,15 @@ public class BossObeliskController : MonoBehaviour
         GameObject obeliskInstant;
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-.5f, -1.899f, -.65f), obelisk.transform.rotation * Quaternion.Euler(0, 30, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.backward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(0, -1.899f, -.75f), obelisk.transform.rotation);
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.backward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(.5f, -1.899f, -.65f), obelisk.transform.rotation * Quaternion.Euler(0, -30, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.backward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void spawnBackArrayPattern()
@@ -104,18 +107,23 @@ public class BossObeliskController : MonoBehaviour
         GameObject obeliskInstant;
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-1.95f, -1.899f, -5.9f), obelisk.transform.rotation);
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-.975f, -1.899f, -5.9f), obelisk.transform.rotation);
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(0, -1.899f, -5.9f), obelisk.transform.rotation);
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(.975f, -1.899f, -5.9f), obelisk.transform.rotation);
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(1.95f, -1.899f, -5.9f), obelisk.transform.rotation);
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void spawnConvergerSideCornerPattern()
@@ -123,21 +131,27 @@ public class BossObeliskController : MonoBehaviour
         GameObject obeliskInstant;
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-3.6f, -1.899f, -4.35f), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-2.85f, -1.899f, -5.1f), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-2.1f, -1.899f, -5.85f), obelisk.transform.rotation * Quaternion.Euler(0, 45, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(2.1f, -1.899f, -5.85f), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(2.85f, -1.899f, -5.1f), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
 
         obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(3.6f, -1.899f, -4.35f), obelisk.transform.rotation * Quaternion.Euler(0, -45, 0));
         obeliskInstant.GetComponentInChildren<ObeliskController>().setDirection(ObeliskController.Directions.forward);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void pushBackTimeTillSpawn()

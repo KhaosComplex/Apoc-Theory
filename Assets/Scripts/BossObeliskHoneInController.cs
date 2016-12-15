@@ -77,52 +77,64 @@ public class BossObeliskHoneInController : MonoBehaviour
 
     private void spawnMiddle()
     {
-        Instantiate(obelisk, transform.TransformPoint(0, -1.899f, -4.0f), obelisk.transform.rotation);
+        GameObject obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(0, -1.899f, -4.0f), obelisk.transform.rotation);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void spawnLeftMostCorner()
     {
-        Instantiate(obelisk, transform.TransformPoint(-3.80f, -1.899f, -4.075f), obelisk.transform.rotation);
+        GameObject obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-3.80f, -1.899f, -4.075f), obelisk.transform.rotation);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void spawnRightMostCorner()
     {
-        Instantiate(obelisk, transform.TransformPoint(3.80f, -1.899f, -4.075f), obelisk.transform.rotation);
+        GameObject obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(3.80f, -1.899f, -4.075f), obelisk.transform.rotation);
+        obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
     }
 
     private void spawnSurrounderPattern()
     {
+        GameObject obeliskInstant;
         switch (secondStagePatternCounter) {
             case 0:
-                Instantiate(obelisk, transform.TransformPoint(.5075f, -1.899f, -0.746f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(.5075f, -1.899f, -0.746f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 1:
-                Instantiate(obelisk, transform.TransformPoint(1.94f, -1.899f, -2.16f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(1.94f, -1.899f, -2.16f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 2:
-                Instantiate(obelisk, transform.TransformPoint(3.912f, -1.899f, -4.019f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(3.912f, -1.899f, -4.019f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 3:
-                Instantiate(obelisk, transform.TransformPoint(1.94f, -1.899f, -5.90f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(1.94f, -1.899f, -5.90f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 4:
-                Instantiate(obelisk, transform.TransformPoint(-1.94f, -1.899f, -5.90f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-1.94f, -1.899f, -5.90f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 5:
-                Instantiate(obelisk, transform.TransformPoint(-3.912f, -1.899f, -4.019f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-3.912f, -1.899f, -4.019f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 6:
-                Instantiate(obelisk, transform.TransformPoint(-1.94f, -1.899f, -2.16f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-1.94f, -1.899f, -2.16f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter++;
                 break;
             case 7:
-                Instantiate(obelisk, transform.TransformPoint(-.5075f, -1.899f, -0.746f), obelisk.transform.rotation);
+                obeliskInstant = (GameObject)Instantiate(obelisk, transform.TransformPoint(-.5075f, -1.899f, -0.746f), obelisk.transform.rotation);
+                obeliskInstant.transform.parent = GameObject.Find("Boss Shots").transform;
                 secondStagePatternCounter = 0;
                 timeBetweenObeliskSpawn = timeBetweenWavesFifthStage;
                 break;

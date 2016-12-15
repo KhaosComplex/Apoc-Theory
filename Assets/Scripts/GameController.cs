@@ -21,12 +21,15 @@ public class GameController : MonoBehaviour {
     [SerializeField] private Text gameOverText;
 
     private bool gameOver = false;
+    private int currentScene;
 
     void Start()
     {
         playerController = playerObject.GetComponent<PlayerController>();
         bossController = bossObject.GetComponent<BossController>();
         gameOverText.enabled = false;
+
+        currentScene = SceneManager.GetActiveScene().buildIndex;
     }
 
     void Update()
@@ -55,7 +58,7 @@ public class GameController : MonoBehaviour {
             gameOverText.enabled = true;
             if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("Start"))
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(currentScene);
             }
         }
     }
