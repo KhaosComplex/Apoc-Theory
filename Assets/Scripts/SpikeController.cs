@@ -4,6 +4,7 @@ using System.Collections;
 public class SpikeController : MonoBehaviour
 {
     [SerializeField] private Transform model;
+    [SerializeField] private Transform indicator;
     [SerializeField] private Transform end;
     [SerializeField] private float timeToWait;
     [SerializeField] private float speed;
@@ -25,6 +26,7 @@ public class SpikeController : MonoBehaviour
         hasntHurtPlayer = true;
 
         playerObject = GameObject.FindWithTag("Player");
+        Destroy(indicator.gameObject, timeToMove);
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class SpikeController : MonoBehaviour
         //DELETE THE OBJECT ONCE IT'S FINISHED AND THE TIME HAS PASSED TO REMOVE IT
         if (delete && Time.timeSinceLevelLoad >= timeToDelete)
         {
-            Destroy(this.gameObject);
+            Destroy(this.transform.parent.gameObject);
         }
 
         //MAKE SURE TO PREPARE FOR DELETION AFTER FINISHED SPIKING
@@ -49,7 +51,7 @@ public class SpikeController : MonoBehaviour
             if (model != null)
                 transform.position = Vector3.MoveTowards(model.transform.position, end.position, speed * Time.deltaTime);
             else
-                Destroy(this);
+                Destroy(this.transform.parent.gameObject);
         }
     }
 
