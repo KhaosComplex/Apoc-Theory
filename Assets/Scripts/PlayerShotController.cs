@@ -20,15 +20,19 @@ public class PlayerShotController : MonoBehaviour
         //IF BOSS GETS HIT, HAVE BOSS LOSE HEALTH
         if (other.gameObject.tag.Equals("Boss"))
         {
+            GetComponent<AudioSource>().Play();
             BossController bossController = other.gameObject.GetComponent<BossController>();
-            if (!bossController.isImmune()) bossController.takeDamage(damage);
-
-            Destroy(this.gameObject);
+            if (!bossController.isImmune())
+                bossController.takeDamage(damage);
+            GetComponent<Renderer>().enabled = false;
+            Destroy(this.gameObject, 1.0f);
         }
         else if (other.gameObject.tag.Equals("ObeliskBossShot"))
         {
+            GetComponent<AudioSource>().Play();
             other.gameObject.GetComponent<ObeliskBossShotController>().takeDamage(damage);
-            Destroy(this.gameObject);
+            GetComponent<Renderer>().enabled = false;
+            Destroy(this.gameObject, 1.0f);
         }
     }
 }
