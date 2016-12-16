@@ -46,7 +46,7 @@ public class CameraPerspectiveZoom : MonoBehaviour
         float x, y, z;
 
         //CHECK IF WE'RE IN MELEE RANGE FIRST
-        float distanceBetweenPlayerAndTarget = Vector3.Distance(player.transform.position, target.transform.position);
+        /*float distanceBetweenPlayerAndTarget = Vector3.Distance(player.transform.position, target.transform.position);
 
         if (distanceBetweenPlayerAndTarget <= meleeRange)
         {
@@ -68,7 +68,14 @@ public class CameraPerspectiveZoom : MonoBehaviour
             z = Mathf.Clamp(startingCameraPosition.z + (player.transform.position.z - startingPlayerPositionZ), clampMinZ, clampMaxZ);
 
             transform.rotation = Quaternion.Lerp(transform.rotation, startingCameraRotation, Time.deltaTime * moveSpeed);
-        }
+        }*/
+
+        //UPDATE CAMERA POSITION FOR NON-MELEE RANGE
+        x = startingCameraPosition.x + (player.transform.position.x - startingPlayerPositionX);
+        y = Mathf.Clamp(startingCameraPosition.y - (player.transform.position.z - startingPlayerPositionZ) * DELTA_COEFFICIENT_Y, clampMinY, clampMaxY);
+        z = Mathf.Clamp(startingCameraPosition.z + (player.transform.position.z - startingPlayerPositionZ), clampMinZ, clampMaxZ);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, startingCameraRotation, Time.deltaTime * moveSpeed);
 
         //SET THE CAMERA POSITION SMOOTHLY
         Vector3 newCameraPosition = new Vector3(x, y, z);

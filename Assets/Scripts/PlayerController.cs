@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
         distanceToBoss = Vector3.Distance(playerPoint, bossPoint);
 
         //MELEE CHECKS
-        if (inMelee == false && distanceToBoss <= meleeSwitchRange)
+        /*if (inMelee == false && distanceToBoss <= meleeSwitchRange)
         {
             GameObject.FindWithTag("Gun").GetComponent<PlayerShooter>().setMelee(true);
             inMelee = true;
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
         {
             GameObject.FindWithTag("Gun").GetComponent<PlayerShooter>().setMelee(false);
             inMelee = false;
-        }
+        }*/
 
         //MELEE DAMAGE
         if (inMelee)
