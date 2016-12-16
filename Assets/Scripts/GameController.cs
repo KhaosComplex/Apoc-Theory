@@ -19,8 +19,12 @@ public class GameController : MonoBehaviour {
     [SerializeField] private Slider bossHPSlider;
     [SerializeField] private Text bossHPText;
     [SerializeField] private Text gameOverText;
+    [SerializeField] private Text gameWonText;
+    [SerializeField] private float timeAfterLossSlowDown;
 
     private bool gameOver = false;
+    private bool gameWon = false;
+    private float timeTillFullPause;
     private int currentScene;
 
     void Start()
@@ -28,6 +32,7 @@ public class GameController : MonoBehaviour {
         playerController = playerObject.GetComponent<PlayerController>();
         bossController = bossObject.GetComponent<BossController>();
         gameOverText.enabled = false;
+        gameWonText.enabled = false;
 
         currentScene = SceneManager.GetActiveScene().buildIndex;
     }
@@ -40,6 +45,8 @@ public class GameController : MonoBehaviour {
         {
             playerHP = 0;
             gameOver = true;
+            Time.timeScale = .5f;
+            timeTillFullPause = Time.timeSinceLevelLoad + timeAfterLossSlowDown;
         }
         bossHP = bossController.getHP();
         bossMaxHP = bossController.getMaxHP();
@@ -47,6 +54,8 @@ public class GameController : MonoBehaviour {
         {
             bossObject.GetComponent<Renderer>().material.color = Color.red;
             bossHP = 0;
+            gameWon = true;
+            Time.timeScale = 0;
         }
         playerHPText.text = ("Player HP: " + playerHP);
         playerHPSlider.value = playerHP / playerMaxHP;
@@ -56,9 +65,22 @@ public class GameController : MonoBehaviour {
         if (gameOver == true)
         {
             gameOverText.enabled = true;
+            if (Time.timeSinceLevelLoad >= timeAfterLossSlowDown)
+                Time.timeScale = 0;
             if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("Start"))
             {
+                Time.timeScale = 1;
                 SceneManager.LoadScene(currentScene);
+            }
+        }
+
+        if (gameWon == true)
+        {
+            gameWonText.enabled = true;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButton("Start"))
+            {
+                Time.timeScale = 1;
+                SceneManager.LoadScene(1);
             }
         }
     }

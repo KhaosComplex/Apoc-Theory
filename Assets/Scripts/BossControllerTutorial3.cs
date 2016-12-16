@@ -31,7 +31,7 @@ public class BossControllerTutorial3 : BossController
 
     void Update()
     {
-        if (healthLost >= hpPerStage)
+        if (healthLost >= hpPerStage && HP > 0)
         {
             healthLost = healthLost % hpPerStage;
             switch (currentStage)
