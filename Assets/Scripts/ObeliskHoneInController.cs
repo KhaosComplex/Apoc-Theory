@@ -10,7 +10,7 @@ public class ObeliskHoneInController : MonoBehaviour
     [SerializeField] private float speedToRise;
     [SerializeField] private float damage;
 
-    private float timeToMove;
+    [SerializeField] private float timeToMove;
     private Rigidbody rb;
     private BoxCollider boxCollider;
     private GameObject playerObject;
@@ -29,7 +29,8 @@ public class ObeliskHoneInController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (model.position.y == end.position.y)
+        
+        if (model.position.y >= end.position.y)
         {
             if (Time.timeSinceLevelLoad >= timeToMove)
             {
@@ -50,7 +51,7 @@ public class ObeliskHoneInController : MonoBehaviour
         else
         {
             transform.position = Vector3.MoveTowards(model.transform.position, end.position, speedToRise * Time.deltaTime);
-            timeToMove = Time.timeSinceLevelLoad + timeToWait;
+            timeToMove = Time.timeSinceLevelLoad + timeToWait; 
         }
 
     }
