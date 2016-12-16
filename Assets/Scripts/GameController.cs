@@ -82,6 +82,7 @@ public class GameController : MonoBehaviour {
             {
                 Time.timeScale = 1;
                 SceneManager.LoadScene(1);
+                StaticGameState.timeToWaitButtonPress = 1;
             }
         }
     }
