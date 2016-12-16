@@ -88,6 +88,8 @@ public class ObeliskHoneInController : MonoBehaviour
             Vector3 dir = other.contacts[0].point - transform.position;
             // We then get the opposite (-Vector3) and normalize it
             dir = -dir.normalized;
+
+            dir = new Vector3(dir.x, 0, dir.z);
             // And finally we add force in the direction of dir and multiply it by force. 
             // This will push back the player
             other.gameObject.GetComponent<CharacterController>().Move(dir * force);

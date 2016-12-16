@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
     private bool gameOver = false;
     private bool gameWon = false;
     private float timeTillFullPause;
+
     private int currentScene;
 
     void Start()
@@ -41,7 +42,7 @@ public class GameController : MonoBehaviour {
     {
         playerHP = playerController.getHP();
         playerMaxHP = playerController.getMaxHP();
-        if (playerHP <= 0)
+        if (playerHP <= 0 && !gameOver)
         {
             playerHP = 0;
             gameOver = true;
@@ -50,7 +51,7 @@ public class GameController : MonoBehaviour {
         }
         bossHP = bossController.getHP();
         bossMaxHP = bossController.getMaxHP();
-        if (bossHP <= 0)
+        if (bossHP <= 0 && !gameWon)
         {
             bossObject.GetComponent<Renderer>().material.color = Color.red;
             bossHP = 0;
@@ -62,10 +63,10 @@ public class GameController : MonoBehaviour {
         bossHPText.text = ("Boss HP: " + bossHP);
         bossHPSlider.value = bossHP / bossMaxHP;
 
-        if (gameOver == true)
+        if (gameOver)
         {
             gameOverText.enabled = true;
-            if (Time.timeSinceLevelLoad >= timeAfterLossSlowDown)
+            if (Time.timeSinceLevelLoad >= timeTillFullPause)
                 Time.timeScale = 0;
             if (Input.GetKeyDown(KeyCode.R) || Input.GetButton("Start"))
             {
@@ -74,7 +75,7 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        if (gameWon == true)
+        if (gameWon)
         {
             gameWonText.enabled = true;
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetButton("Start"))
