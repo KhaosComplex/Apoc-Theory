@@ -30,7 +30,7 @@ public class ObeliskController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (model.position.y == end.position.y)
+        if (model.position.y >= end.position.y)
         {
             if (Time.timeSinceLevelLoad >= timeToMove)
             {
