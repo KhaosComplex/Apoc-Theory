@@ -30,6 +30,13 @@ public class LevelSelect : MonoBehaviour
         playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
         currentLevel = playerSettingsFileReader.getCurrentLevel();
 
+        StaticGameState.playing = false;
+
+        if (StaticGameState.currentLevel == 0)
+            StaticGameState.currentLevel = currentLevel;
+        else
+            currentLevel = StaticGameState.currentLevel;
+
         loadLevelMenu();
     }
 
@@ -115,12 +122,9 @@ Also be sure to juke the oncomming Obelisks that now hone in on your location!";
 
     public void PlayLevel()
     {
-        SceneManager.LoadScene(currentLevel+1);
-    }
-
-    public void StartLevel(int levelToLoad)
-    {
-        SceneManager.LoadScene(levelToLoad);
+        //LOAD LEVEL, OFFSET BY AMOUNT OF SCENES THAT START BEFORE THE LEVEL
+        StaticGameState.playing = true;
+        SceneManager.LoadScene(currentLevel + 1);      
     }
 
     public void BackToMainMenu()

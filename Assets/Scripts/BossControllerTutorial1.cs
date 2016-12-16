@@ -18,6 +18,9 @@ public class BossControllerTutorial1 : BossController
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
 
+        if (StaticGameState.playing)
+            StaticGameState.currentLevel = 1;
+
         firstStage();
 
     }

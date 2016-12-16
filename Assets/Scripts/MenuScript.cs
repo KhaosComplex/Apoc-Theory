@@ -21,6 +21,8 @@ public class MenuScript : MonoBehaviour {
         playerSettingsFileReader = playerObject.GetComponent<PlayerSettingsFileReader>();
         playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
 
+        StaticGameState.playing = false;
+
         if (playerSettingsFileReader.getController())
         {
             controllerText.GetComponentInChildren<Text>().color = Color.green;

@@ -21,6 +21,9 @@ public class BossControllerTutorial2 : BossController
         bossLRShooters = GetComponentsInChildren<BossShooter>();
         bossSpikeController = GetComponent<BossSpikeController>();
 
+        if (StaticGameState.playing)
+            StaticGameState.currentLevel = 2;
+
         firstStage();
 
     }

@@ -14,6 +14,7 @@ public class BossObeliskBossShotController : MonoBehaviour
     void Start()
     {
         obeliskBossShotInstances = new GameObject[4];
+        immune = true;
     }
 
     void Update()

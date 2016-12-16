@@ -23,6 +23,9 @@ public class BossControllerTutorial5 : BossController
         bossObeliskBossShotController = GetComponent<BossObeliskBossShotController>();
         bossShockwaveController = GetComponent<BossShockwaveController>();
 
+        if (StaticGameState.playing)
+            StaticGameState.currentLevel = 5;
+
         firstStage();
 
     }
@@ -52,8 +55,8 @@ public class BossControllerTutorial5 : BossController
                 {
                     if (immune)
                         bossShooterScript.enabled = false;
-                    else
-                        bossShooterScript.enabled = true;
+                    else { }
+                        //bossShooterScript.enabled = true;
                 }
                 break;
         }

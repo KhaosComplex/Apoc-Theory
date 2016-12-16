@@ -29,6 +29,9 @@ public class BossControllerMain : BossController
         bossObeliskBossShotController = GetComponent<BossObeliskBossShotController>();
         bossShockwaveController = GetComponent<BossShockwaveController>();
 
+        if (StaticGameState.playing)
+            StaticGameState.currentLevel = 6;
+
         firstStage();
 
     }
