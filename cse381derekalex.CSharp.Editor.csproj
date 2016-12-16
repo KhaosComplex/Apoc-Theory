@@ -111,6 +111,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="cse381derekalex.CSharp.Plugins.csproj">
+      <Project>{15817E6C-8016-BC62-BE1F-5ECCCDA1B032}</Project>
+      <Name>cse381derekalex.CSharp.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="cse381derekalex.CSharp.csproj">
       <Project>{0BDAEA10-0774-5377-C9C2-6FE6389DF120}</Project>
       <Name>cse381derekalex.CSharp</Name>
@@ -121,6 +125,7 @@
     <Compile Include="Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
     <None Include="Assets\Settings\PlayerSettings.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

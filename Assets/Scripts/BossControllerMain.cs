@@ -18,8 +18,9 @@ public class BossControllerMain : BossController
 
 
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         maxHP = HP;
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
@@ -59,6 +60,7 @@ public class BossControllerMain : BossController
                     sixthStage();
                     break;
             }
+            mainCamera.shakeCamera();
         }
 
         switch (currentStage)

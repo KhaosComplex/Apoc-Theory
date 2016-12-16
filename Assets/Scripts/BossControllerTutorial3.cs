@@ -14,8 +14,9 @@ public class BossControllerTutorial3 : BossController
     private BossShockwaveController bossShockwaveController;
 
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         maxHP = HP;
 
         bossObeliskController = GetComponent<BossObeliskController>();
@@ -39,6 +40,7 @@ public class BossControllerTutorial3 : BossController
                     secondStage();
                     break;
             }
+            mainCamera.shakeCamera();
         }
 
         switch (currentStage)

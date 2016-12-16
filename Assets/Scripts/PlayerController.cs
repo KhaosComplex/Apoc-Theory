@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private GameObject meleeBoxObject;
     private bool dashImmune;
     private float endDashImmune;
+    private CameraPerspectiveZoom mainCamera;
 
     void Start()
     {
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
         hitStunTime = hitStunDuration;
         //bossObject = GameObject.FindWithTag("Boss");
         meleeBoxObject = GameObject.FindWithTag("MeleeBox");
+        mainCamera = Camera.main.GetComponent<CameraPerspectiveZoom>();
     }
 
     void Update()

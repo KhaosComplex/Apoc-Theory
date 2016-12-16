@@ -74,4 +74,9 @@ public class CameraPerspectiveZoom : MonoBehaviour
         Vector3 newCameraPosition = new Vector3(x, y, z);
         transform.position = Vector3.Lerp(transform.position, newCameraPosition, Time.deltaTime * moveSpeed);
     }
+
+    public void shakeCamera()
+    {
+        iTween.ShakePosition(this.transform.parent.gameObject, new Vector3(1, 0, 0), 1);
+    }
 }

@@ -15,8 +15,9 @@ public class BossControllerTutorial5 : BossController
     private BossObeliskBossShotController bossObeliskBossShotController;
     private BossShockwaveController bossShockwaveController;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         maxHP = HP;
         bossBurstShooters = GetComponentsInChildren<BossBurstShooter>();
         bossLRShooters = GetComponentsInChildren<BossShooter>();
@@ -41,6 +42,7 @@ public class BossControllerTutorial5 : BossController
                     secondStage();
                     break;
             }
+            mainCamera.shakeCamera();
         }
 
         switch (currentStage)
@@ -55,8 +57,8 @@ public class BossControllerTutorial5 : BossController
                 {
                     if (immune)
                         bossShooterScript.enabled = false;
-                    else { }
-                        //bossShooterScript.enabled = true;
+                    else
+                        bossShooterScript.enabled = true;
                 }
                 break;
         }

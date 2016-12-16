@@ -11,6 +11,12 @@ public class BossController : MonoBehaviour
     protected float maxHP;
 
     protected float healthLost;
+    protected CameraPerspectiveZoom mainCamera;
+
+    protected void Start()
+    {
+        mainCamera = Camera.main.GetComponent<CameraPerspectiveZoom>();
+    }
 
     public float getHP()
     {
