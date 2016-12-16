@@ -83,6 +83,11 @@ public class LevelSelect : MonoBehaviour
         {
             PlayLevel();
         }
+
+        if (Input.GetButton("Back"))
+        {
+            BackToMainMenu();
+        }
     }
 
     private void loadLevelMenu()
