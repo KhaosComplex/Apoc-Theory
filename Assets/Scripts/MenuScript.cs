@@ -16,14 +16,24 @@ public class MenuScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        quitMenu.enabled = false;
-        PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
+        /*PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
         playerSettingsFileReader = playerObject.GetComponent<PlayerSettingsFileReader>();
-        playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
+        playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);*/
 
+        /*if (playerSettingsFileReader.getController())
+        {
+            controllerText.GetComponentInChildren<Text>().color = Color.green;
+            controllerText.GetComponentInChildren<Text>().text = "Controller (ENABLED)";
+        }
+        else {
+            controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);
+            controllerText.GetComponentInChildren<Text>().text = "Controller (DISABLED)";
+        }*/
+
+        quitMenu.enabled = false;
         StaticGameState.playing = false;
 
-        if (playerSettingsFileReader.getController())
+        if (StaticGameState.controller)
         {
             controllerText.GetComponentInChildren<Text>().color = Color.green;
             controllerText.GetComponentInChildren<Text>().text = "Controller (ENABLED)";
@@ -57,9 +67,22 @@ public class MenuScript : MonoBehaviour {
 
     public void Controller()
     {
-        playerSettingsFileReader.setController(PLAYER_SETTINGS_FILE, !playerSettingsFileReader.getController());
+        /*playerSettingsFileReader.setController(PLAYER_SETTINGS_FILE, !playerSettingsFileReader.getController());
 
         if (playerSettingsFileReader.getController())
+        {
+            controllerText.GetComponentInChildren<Text>().color = Color.green;
+            controllerText.GetComponentInChildren<Text>().text = "Controller (ENABLED)";
+
+        }
+        else {
+            controllerText.GetComponentInChildren<Text>().color = new Color(1f, .404f, .404f, 1f);
+            controllerText.GetComponentInChildren<Text>().text = "Controller (DISABLED)";
+        }*/
+
+        StaticGameState.controller = !StaticGameState.controller;
+
+        if (StaticGameState.controller)
         {
             controllerText.GetComponentInChildren<Text>().color = Color.green;
             controllerText.GetComponentInChildren<Text>().text = "Controller (ENABLED)";

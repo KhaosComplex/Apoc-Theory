@@ -25,15 +25,18 @@ public class LevelSelect : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
+        /*PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
         playerSettingsFileReader = playerObject.GetComponent<PlayerSettingsFileReader>();
         playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
-        currentLevel = playerSettingsFileReader.getCurrentLevel();
+        currentLevel = playerSettingsFileReader.getCurrentLevel();*/
 
         StaticGameState.playing = false;
 
         if (StaticGameState.currentLevel == 0)
-            StaticGameState.currentLevel = currentLevel;
+        {
+            StaticGameState.currentLevel = 1;
+            currentLevel = StaticGameState.currentLevel;
+        }
         else
             currentLevel = StaticGameState.currentLevel;
 

@@ -18,10 +18,12 @@ public class PlayerShooter : MonoBehaviour
     void Start()
     {
         //GET CONTROLLER SETTINGS FROM THE SETTINGS FILE AND SET THEM TO THE GUN
-        PlayerSettingsFileReader playerSettingsFileReader = GetComponentInParent<PlayerSettingsFileReader>();
+        /*PlayerSettingsFileReader playerSettingsFileReader = GetComponentInParent<PlayerSettingsFileReader>();
         PLAYER_SETTINGS_FILE = Application.dataPath + "/Settings/PlayerSettings.txt";
         playerSettingsFileReader.Load(PLAYER_SETTINGS_FILE);
-        controller = playerSettingsFileReader.getController();
+        controller = playerSettingsFileReader.getController();*/
+
+        controller = StaticGameState.controller;
 
         if (controller)
         {
@@ -49,7 +51,6 @@ public class PlayerShooter : MonoBehaviour
             }
         }
         else {
-
             //FIRE GUN, CONSISTENT WITH FIRE RATE
             if (Input.GetButton("Fire1") && Time.timeSinceLevelLoad > nextFire && !inMeleeRange)
             {
