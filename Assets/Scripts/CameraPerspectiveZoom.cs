@@ -84,6 +84,7 @@ public class CameraPerspectiveZoom : MonoBehaviour
 
     public void shakeCamera()
     {
+        GetComponent<AudioSource>().Play();
         iTween.ShakePosition(this.transform.parent.gameObject, new Vector3(1, 0, 0), 1);
     }
 }
