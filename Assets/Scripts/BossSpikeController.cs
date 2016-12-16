@@ -59,10 +59,8 @@ public class BossSpikeController : MonoBehaviour
 
     private void spawnSpikeAtPlayerPosition()
     {
-        Debug.Log("Player: " + playerObject.transform.position);
         GameObject spikeHolder = (GameObject)Instantiate(spike, new Vector3(playerObject.transform.position.x, 0, playerObject.transform.position.z), spike.transform.rotation);
         spikeHolder.transform.parent = GameObject.Find("Boss Shots").transform;
-        Debug.Log("spikeHolder: " + spikeHolder.transform.position);
     }
 
     private void pushBackTimeTillSpawn()
