@@ -208,9 +208,13 @@ public class PlayerController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-        GetComponent<AudioSource>().Play();
-        if (!dashImmune)
+        if (HP != 0 && !dashImmune)
+        {
+            GetComponent<AudioSource>().Play();
             HP = HP - damage;
+            if (HP < 0)
+                HP = 0;
+        }
         if (hitStun == false)
         {
             hitStun = true;
