@@ -43,6 +43,14 @@ public class MenuScript : MonoBehaviour {
             controllerText.GetComponentInChildren<Text>().text = "Controller (DISABLED)";
         }
     }
+
+    void Update()
+    {
+        if (Input.GetButton("A"))
+        {
+            StaticGameState.timeToWaitButtonPress = 1;
+        }
+    }
 	
 	public void QuitPress()
     {

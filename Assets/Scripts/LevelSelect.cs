@@ -79,14 +79,16 @@ public class LevelSelect : MonoBehaviour
             }
         }
 
-        if (Input.GetButton("Start") || Input.GetButton("A"))
+        if (Time.timeSinceLevelLoad >= StaticGameState.timeToWaitButtonPress && (Input.GetButton("Start") || Input.GetButton("A")))
         {
             PlayLevel();
+            StaticGameState.timeToWaitButtonPress = 0;
         }
 
-        if (Input.GetButton("Back"))
+        if (Time.timeSinceLevelLoad >= StaticGameState.timeToWaitButtonPress && Input.GetButton("Back"))
         {
             BackToMainMenu();
+            StaticGameState.timeToWaitButtonPress = 0;
         }
     }
 

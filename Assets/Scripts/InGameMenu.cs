@@ -6,8 +6,11 @@ public class InGameMenu : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetButton("Back"))
+        if (Time.timeSinceLevelLoad >= StaticGameState.timeToWaitButtonPress && Input.GetButton("Back"))
+        {
             BackToLevelSelect();
+            StaticGameState.timeToWaitButtonPress = 1;
+        }
     }
 
     public void BackToLevelSelect()
