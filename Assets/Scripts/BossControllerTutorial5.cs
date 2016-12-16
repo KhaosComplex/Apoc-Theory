@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BossControllerTutorial5 : BossController
 {
@@ -42,7 +43,8 @@ public class BossControllerTutorial5 : BossController
                     secondStage();
                     break;
             }
-            mainCamera.shakeCamera();
+            if (SceneManager.GetActiveScene().buildIndex != 1)
+                mainCamera.shakeCamera();
         }
 
         switch (currentStage)
