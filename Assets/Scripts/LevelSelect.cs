@@ -19,6 +19,7 @@ public class LevelSelect : MonoBehaviour
     private GameObject currentLoadedLevel;
     private bool fading;
     private float timeTillFinishedFading = -1;
+    private float timeTillControllerMove;
 
     private string PLAYER_SETTINGS_FILE;
 
@@ -60,6 +61,27 @@ public class LevelSelect : MonoBehaviour
         {
             if (Time.timeSinceLevelLoad <= timeTillFinishedFading)
                 fadePlane.color = Color.Lerp(opaque, transparent, (fadeTime - (timeTillFinishedFading - Time.timeSinceLevelLoad)) / fadeTime);
+        }
+
+        float horizontalMovement = Input.GetAxis("Horizontal");
+
+        if (Time.timeSinceLevelLoad >= timeTillControllerMove)
+        {
+            if (horizontalMovement == 1)
+            {
+                LoadNextLevel();
+                timeTillControllerMove = Time.timeSinceLevelLoad + fadeTime;
+            }
+            else if (horizontalMovement == -1)
+            {
+                LoadPreviousLevel();
+                timeTillControllerMove = Time.timeSinceLevelLoad + fadeTime;
+            }
+        }
+
+        if (Input.GetButton("Start") || Input.GetButton("A"))
+        {
+            PlayLevel();
         }
     }
 
