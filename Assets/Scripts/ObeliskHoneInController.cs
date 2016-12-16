@@ -75,6 +75,12 @@ public class ObeliskHoneInController : MonoBehaviour
         // force is how forcefully we will push the player away from the enemy.
         float force = 20;
 
+        float verticalMovement = Input.GetAxis("Vertical");
+        if (verticalMovement < 0)
+        {
+            force = force * 2;
+        }
+
         // If the object we hit is the enemy
         if (other.gameObject.tag.Equals("Player"))
         {

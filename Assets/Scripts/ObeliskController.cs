@@ -86,6 +86,12 @@ public class ObeliskController : MonoBehaviour {
         // force is how forcefully we will push the player away from the enemy.
         float force = 20;
 
+        float verticalMovement = Input.GetAxis("Vertical");
+        if (verticalMovement < 0)
+        {
+            force = force * 2;
+        }
+
         // If the object we hit is the enemy
         if (other.gameObject.tag.Equals("Player"))
         {
@@ -93,6 +99,7 @@ public class ObeliskController : MonoBehaviour {
             Vector3 dir = other.contacts[0].point - transform.position;
             // We then get the opposite (-Vector3) and normalize it
             dir = -dir.normalized;
+
             // And finally we add force in the direction of dir and multiply it by force. 
             // This will push back the player
             other.gameObject.GetComponent<CharacterController>().Move(dir * force);
